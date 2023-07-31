@@ -11,7 +11,6 @@ public class FightTrigger : MonoBehaviour
     {
         if (other.TryGetComponent<Player>(out Player player))
         {
-            Debug.Log("Fight");
             IsFightStarted = true;
             FightStarted?.Invoke();
         }

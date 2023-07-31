@@ -18,6 +18,6 @@ public class FightHandler : MonoBehaviour
     }
     private void OnFightStarted()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Fight");
     }
 }
