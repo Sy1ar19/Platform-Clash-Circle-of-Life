@@ -3,23 +3,24 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private Transform playerTransform;
-    [SerializeField] private Transform fightCameraPosition;
-    [SerializeField] private Vector3 offset;
-    [SerializeField] private float followSpeed = 5;
-    [SerializeField] private float rotationSpeed = 5;
+
+    [SerializeField] private Transform _fightCameraPosition;
+    [SerializeField] private Vector3 _offset;
+    [SerializeField] private float _followSpeed = 5;
+    [SerializeField] private float _rotationSpeed = 5;
     [SerializeField] private FightTrigger _fightTrigger;
+    [SerializeField] private Player _player;
 
     private bool _isFightStarted = false;
     private bool _isMovingCamera = false;
-    private Coroutine moveCoroutine;
+    private Coroutine _moveCoroutine;
 
     private void LateUpdate()
     {
-        if (playerTransform != null && !_isFightStarted && !_isMovingCamera)
+        if (_player != null && _player.IsAlive && !_isFightStarted && !_isMovingCamera)
         {
-            Vector3 targetPosition = playerTransform.position + offset;
-            transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
+            Vector3 targetPosition = _player.transform.position + _offset;
+            transform.position = Vector3.Lerp(transform.position, targetPosition, _followSpeed * Time.deltaTime);
         }
     }
 
@@ -32,10 +33,10 @@ public class CameraFollow : MonoBehaviour
     {
         _fightTrigger.FightStarted -= OnFightStarted;
 
-        if (moveCoroutine != null)
+        if (_moveCoroutine != null)
         {
-            StopCoroutine(moveCoroutine);
-            moveCoroutine = null;
+            StopCoroutine(_moveCoroutine);
+            _moveCoroutine = null;
         }
     }
 
@@ -47,10 +48,10 @@ public class CameraFollow : MonoBehaviour
 
     private void ChangeFightCameraPosition()
     {
-        if (fightCameraPosition != null)
+        if (_fightCameraPosition != null)
         {
-            Vector3 targetPosition = fightCameraPosition.position + new Vector3(0f, 10f, 0f); // Change 10f to the desired height
-            Quaternion targetRotation = fightCameraPosition.rotation;
+            Vector3 targetPosition = _fightCameraPosition.position + new Vector3(0f, 10f, 0f);
+            Quaternion targetRotation = _fightCameraPosition.rotation;
 
             SmoothMoveCamera(targetPosition, targetRotation);
         }
@@ -61,12 +62,12 @@ public class CameraFollow : MonoBehaviour
         if (_isMovingCamera)
             return;
 
-        if (moveCoroutine != null)
+        if (_moveCoroutine != null)
         {
-            StopCoroutine(moveCoroutine);
+            StopCoroutine(_moveCoroutine);
         }
 
-        moveCoroutine = StartCoroutine(MoveCameraCoroutine(targetPosition, targetRotation));
+        _moveCoroutine = StartCoroutine(MoveCameraCoroutine(targetPosition, targetRotation));
     }
 
     private IEnumerator MoveCameraCoroutine(Vector3 targetPosition, Quaternion targetRotation)
@@ -76,10 +77,10 @@ public class CameraFollow : MonoBehaviour
         Quaternion initialRotation = transform.rotation;
         float elapsedTime = 0f;
 
-        while (elapsedTime < followSpeed)
+        while (elapsedTime < _followSpeed)
         {
             elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / followSpeed);
+            float t = Mathf.Clamp01(elapsedTime / _followSpeed);
             transform.position = Vector3.Lerp(initialPosition, targetPosition, t);
             transform.rotation = Quaternion.Slerp(initialRotation, targetRotation, t);
             yield return null;

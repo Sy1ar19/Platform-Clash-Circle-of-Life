@@ -3,15 +3,11 @@ using UnityEngine;
 public class Circle : MonoBehaviour, IMovable
 {
     [SerializeField] private float _rotationSpeed = 1000f;
+    [SerializeField] private float _raycastDistance = 100f;
 
     private bool _isRotating = false;
     private bool _canRotate = true;
-    private Transform _transform;
-
-    private void Start()
-    {
-        _transform = GetComponent<Transform>();
-    }
+    private Transform _selectedCircle;
 
     private void Update()
     {
@@ -28,10 +24,11 @@ public class Circle : MonoBehaviour, IMovable
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, _raycastDistance))
             {
                 if (hit.collider.TryGetComponent<DeahtTrigger>(out DeahtTrigger deahtTrigger))
                 {
+                    _selectedCircle = deahtTrigger.transform.parent;
                     _isRotating = true;
                 }
             }
@@ -45,7 +42,7 @@ public class Circle : MonoBehaviour, IMovable
         if (_isRotating)
         {
             float mouseX = Input.GetAxis("Mouse X");
-            _transform.Rotate(Vector3.up, mouseX * _rotationSpeed * Time.deltaTime);
+            _selectedCircle.transform.Rotate(Vector3.up, mouseX * _rotationSpeed * Time.deltaTime);
         }
     }
 }
