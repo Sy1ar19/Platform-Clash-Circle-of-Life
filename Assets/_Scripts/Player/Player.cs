@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-[RequireComponent(typeof(Rigidbody), typeof(Animator), typeof(DisplayDamage))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerAnimations), typeof(EnemyDetector))]
+[RequireComponent(typeof(DisplayDamage))]
 public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
 {
     [SerializeField] private float _movementSpeed;
@@ -13,7 +14,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
 
     private Enemy _enemy;
     private Rigidbody _rigidbody;
-    private Animator _animator;
+    private PlayerAnimations _playerAnimations;
     private bool _canMove = true;
     private bool _isAttacking = false;
     public readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
@@ -33,19 +34,34 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         _displayDamage = GetComponent<DisplayDamage>();
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.freezeRotation = true;
-        _animator = GetComponent<Animator>();
+        _playerAnimations = GetComponent<PlayerAnimations>();
         CurrentHealth = _health;
 
         _enemyDetector = GetComponent<EnemyDetector>();
         _enemyDetector.EnemyDetected += OnEnemyDetected;
         _enemyDetector.EnemyLost += OnEnemyLost;
     }
+    private void FixedUpdate()
+    {
+        if (_canMove)
+        {
+            Move();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_attackCoroutine != null)
+        {
+            StopCoroutine(_attackCoroutine);
+        }
+    }
 
     public void Die()
     {
         IsAlive = false;
         StopMove();
-        _animator.SetBool(IsDying, true);
+        _playerAnimations.PlayDeathAnimation();
         Debug.Log("Die");
     }
 
@@ -74,7 +90,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
 
     public void PlayVictoryAnimation()
     {
-        _animator.SetBool(Win, true);
+        _playerAnimations.PlayVictoryAnimation();
     }
 
     private void OnEnemyLost()
@@ -85,7 +101,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
             _isAttacking = false;
         }
 
-        _animator.SetBool(IsAttacking, false);
+        _playerAnimations.PlayAttackAnimation(false);
         _enemy = null;
     }
 
@@ -95,7 +111,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         {
             _enemy = enemy;
             _attackCoroutine = StartCoroutine(AttackWithDelay(enemy, _damage, _attackDelay));
-            _animator.SetBool(IsAttacking, true);
+            _playerAnimations.PlayAttackAnimation(true);
         }
     }
 
@@ -106,29 +122,13 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         while (_enemy != null && _enemy.CurrentHealth > 0)
         {
             enemy.ApplyDamage(damage + UnityEngine.Random.Range(-5, 5));
-            _animator.SetBool(IsAttacking, true);
+            _playerAnimations.PlayAttackAnimation(true);
             yield return new WaitForSeconds(delay);
         }
 
-        _animator.SetBool(IsAttacking, false);
+        _playerAnimations.PlayAttackAnimation(false);
         _isAttacking = false;
         _enemy = null;
-    }
-
-    private void FixedUpdate()
-    {
-        if (_canMove)
-        {
-            Move();
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (_attackCoroutine != null)
-        {
-            StopCoroutine(_attackCoroutine);
-        }
     }
 
     public void Move()
