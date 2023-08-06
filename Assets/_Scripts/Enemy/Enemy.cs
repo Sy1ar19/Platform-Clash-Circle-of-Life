@@ -7,6 +7,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     [SerializeField] protected float _health;
     [SerializeField] protected float _damage;
 
+    public readonly int TakeDamage = Animator.StringToHash(nameof(TakeDamage));
+
     protected DisplayDamage _displayDamage;
     protected Animator _animator;
 
@@ -27,7 +29,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         ReceivedDamage = damage;
         _displayDamage.SpawnPopup(damage);
-        _animator.SetBool("TakeDamage", true);
+        _animator.SetBool(TakeDamage, true);
 
         if (damage < 0)
             return;

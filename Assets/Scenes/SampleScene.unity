@@ -6655,7 +6655,7 @@ MonoBehaviour:
   _raycastDistance: 45
   _rayColor: {r: 1, g: 0, b: 0, a: 1}
   _health: 100
-  _damage: 1
+  _damage: 10
   _attackDelay: 1
   _shootPoint: {fileID: 1701917007}
 --- !u!54 &1762018172759299394
@@ -19078,6 +19078,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 8322022667464979569, guid: 7a5314319c204eb44a62bcce5430b496, type: 3}
+      propertyPath: _rotationSpeed
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19663,6 +19667,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1517998666594798973, guid: acfa0979005cdcc4d9129996aaa91cb2, type: 3}
+      propertyPath: _rotationSpeed
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 3580619889522208704, guid: acfa0979005cdcc4d9129996aaa91cb2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.000014983583
