@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -9,7 +8,14 @@ public class Boss : Enemy
     [SerializeField] private Color _rayColor = Color.red;
     [SerializeField] private float _attackDelay = 1.0f;
     [SerializeField] private Transform _shootPoint;
-    
+
+    [SerializeField] private ParticleSystem _muzzleEffect;
+
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _audioClip;
+
+    public readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
+
     private Player _target;
     private bool _isAttacking = false;
     private Coroutine _attackCoroutine;
@@ -46,7 +52,7 @@ public class Boss : Enemy
         if (_target != null && !_isAttacking)
         {
             _attackCoroutine = StartCoroutine(AttackWithDelay(_target, _damage, _attackDelay));
-            _animator.SetBool("IsAttacking", true);
+            _animator.SetBool(IsAttacking, true);
         }
     }
 
@@ -56,9 +62,10 @@ public class Boss : Enemy
 
         yield return new WaitForSeconds(delay);
 
-        target.ApplyDamage(damage + UnityEngine.Random.Range(-1, 1));
+        target.ApplyDamage(damage + Random.Range(-1, 1));
+        EffectUtils.PerformEffect(_muzzleEffect, _audioSource, _audioClip);
 
-        _animator.SetBool("IsAttacking", false);
+        _animator.SetBool(IsAttacking, false);
 
         _isAttacking = false;
     }

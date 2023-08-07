@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -11,6 +10,11 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
     [SerializeField] private float _health;
     [SerializeField] private float _damage;
     [SerializeField] private float _attackDelay = 1.0f;
+
+    [SerializeField] private ParticleSystem _muzzleEffect;
+
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _audioClip;
 
     private Enemy _enemy;
     private Rigidbody _rigidbody;
@@ -93,6 +97,14 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         _playerAnimations.PlayVictoryAnimation();
     }
 
+    public void Move()
+    {
+        Vector3 forwardDirection = transform.forward * _movementSpeed;
+        //_rigidbody.MovePosition(_rigidbody.position + forwardDirection * _movementSpeed * Time.deltaTime);
+        _rigidbody.velocity = forwardDirection * _movementSpeed;
+        //_rigidbody.AddForce(forwardDirection);
+    }
+
     private void OnEnemyLost()
     {
         if (_isAttacking)
@@ -122,6 +134,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         while (_enemy != null && _enemy.CurrentHealth > 0)
         {
             enemy.ApplyDamage(damage + UnityEngine.Random.Range(-5, 5));
+            EffectUtils.PerformEffect(_muzzleEffect, _audioSource, _audioClip);
             _playerAnimations.PlayAttackAnimation(true);
             yield return new WaitForSeconds(delay);
         }
@@ -129,13 +142,5 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         _playerAnimations.PlayAttackAnimation(false);
         _isAttacking = false;
         _enemy = null;
-    }
-
-    public void Move()
-    {
-        Vector3 forwardDirection = transform.forward * _movementSpeed;
-        //_rigidbody.MovePosition(_rigidbody.position + forwardDirection * _movementSpeed * Time.deltaTime);
-        _rigidbody.velocity = forwardDirection * _movementSpeed;
-        //_rigidbody.AddForce(forwardDirection);
     }
 }
