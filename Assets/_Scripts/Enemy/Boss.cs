@@ -85,5 +85,7 @@ public class Boss : Enemy
     {
         BossDied?.Invoke();
         Destroy(gameObject);
+        _target.AddMoney(_moneyReward);
+        _target.AddExperience(_experienceReward);
     }
 }

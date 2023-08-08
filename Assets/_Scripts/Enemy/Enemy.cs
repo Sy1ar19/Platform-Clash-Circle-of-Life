@@ -6,7 +6,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected float _health;
     [SerializeField] protected float _damage;
-    [SerializeField] protected float _reward;
+    [SerializeField] protected int _moneyReward;
+    [SerializeField] protected int _experienceReward;
 
     public readonly int TakeDamage = Animator.StringToHash(nameof(TakeDamage));
 
