@@ -13,7 +13,7 @@ public class MoneyDisplay : MonoBehaviour
         UpdateMoneyDisplay(_player.Money);
     }
 
-    private void OnMoneyChanged(float newMoney)
+    private void OnMoneyChanged(int newMoney)
     {
         UpdateMoneyDisplay(newMoney);
     }
@@ -25,11 +25,11 @@ public class MoneyDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.MoneyChanged += OnMoneyChanged;
+        _player.MoneyIncreased += OnMoneyChanged;
     }
 
     private void OnDisable()
     {
-        _player.MoneyChanged -= OnMoneyChanged;
+        _player.MoneyIncreased -= OnMoneyChanged;
     }
 }

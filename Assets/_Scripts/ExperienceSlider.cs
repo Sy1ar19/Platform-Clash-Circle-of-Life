@@ -17,7 +17,7 @@ public class ExperienceSlider : MonoBehaviour
         UpdateExperienceSlider(_player.CurrentExperience);
     }
 
-    private void OnExperienceChanged(float newExperience)
+    private void OnExperienceChanged(int newExperience)
     {
         UpdateExperienceSlider(newExperience);
     }

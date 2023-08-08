@@ -84,8 +84,8 @@ public class Boss : Enemy
     public override void Die()
     {
         BossDied?.Invoke();
-        Destroy(gameObject);
         _target.AddMoney(_moneyReward);
         _target.AddExperience(_experienceReward);
+        Destroy(gameObject);
     }
 }

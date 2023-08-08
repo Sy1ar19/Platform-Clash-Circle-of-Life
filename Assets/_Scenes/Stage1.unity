@@ -59254,6 +59254,7 @@ GameObject:
   - component: {fileID: 2708602080517215245}
   - component: {fileID: 3429603264652011749}
   - component: {fileID: 6964795655313397159}
+  - component: {fileID: 6964795655313397160}
   m_Layer: 5
   m_Name: Button_ClaimAD
   m_TagString: Untagged
@@ -93976,6 +93977,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6964795655313397160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4594850218586853684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47199aaff1ca88b4cbf616a8cc86d523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 6964795655313397159}
+  _player: {fileID: 8210866288237516606}
+  _coinsMultiplier: 2
 --- !u!222 &6980112872288350224
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -106361,9 +106377,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movementSpeed: 5
   _health: 100
-  _damage: 10
+  _damage: 30
   _attackDelay: 1
-  _maxExperience: 200
+  _maxExperience: 100
   _muzzleEffect: {fileID: 3111046728296511447}
   _audioSource: {fileID: 4989755400810882080}
   _audioClip: {fileID: 8300000, guid: 1a69655e0f785d6448083cfb2235878a, type: 3}
@@ -106614,11 +106630,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8284251942446170221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99c38fb9539cec947abf7ac0696141ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 1dd31ad2792f6b447992596e6a08218a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _moneyText: {fileID: 8466869049434015606}
   _player: {fileID: 8210866288237516606}
+  _advertisementButton: {fileID: 6964795655313397160}
 --- !u!1 &8325748930225842800
 GameObject:
   m_ObjectHideFlags: 0
@@ -106948,7 +106965,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1,000
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 50c12c23294124aa48490c44ac65a9e4, type: 2}
   m_sharedMaterial: {fileID: 7746803525459343344, guid: 50c12c23294124aa48490c44ac65a9e4, type: 2}

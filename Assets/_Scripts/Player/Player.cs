@@ -11,18 +11,19 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
     [SerializeField] private float _health;
     [SerializeField] private float _damage;
     [SerializeField] private float _attackDelay = 1.0f;
-    [SerializeField] private float _maxExperience = 100f;
+    [SerializeField] private int _maxExperience = 100;
 
     [SerializeField] private ParticleSystem _muzzleEffect;
 
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _audioClip;
 
-    public event Action<float> MoneyChanged;
-    public event Action<float> ExperienceChanged;
+    public event Action<int> MoneyIncreased;
+    public event Action<int> ExperienceChanged;
 
-    private float _currentExperience = 0f;
+    private int _currentExperience = 0;
     private int _level = 1;
+    private int _levelMoney = 0;
     private Enemy _enemy;
     private Rigidbody _rigidbody;
     private PlayerAnimations _playerAnimations;
@@ -43,15 +44,18 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
     public bool WasAttacked { get; private set; }
     public int Money { get; private set; }
     public int Level => _level;
+    public int LevelMoney => _levelMoney;
 
     private void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         LoadPlayerProgress();
         _displayDamage = GetComponent<DisplayDamage>();
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.freezeRotation = true;
         _playerAnimations = GetComponent<PlayerAnimations>();
         CurrentHealth = _health;
+        _levelMoney = 0;
 
         _enemyDetector = GetComponent<EnemyDetector>();
         _enemyDetector.EnemyDetected += OnEnemyDetected;
@@ -120,11 +124,12 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
     public void AddMoney(int money)
     {
         Money += money;
-        MoneyChanged?.Invoke(Money);
+        _levelMoney += money;
+        MoneyIncreased?.Invoke(Money);
         SavePlayerProgress();
     }
 
-    public void AddExperience(float experience)
+    public void AddExperience(int experience)
     {
         _currentExperience += experience;
 
@@ -132,7 +137,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         {
             _currentExperience -= _maxExperience;
             _level++;
-            _maxExperience *= 1.5f;
+            _maxExperience *= 2;
         }
 
         ExperienceChanged?.Invoke(_currentExperience);
@@ -182,16 +187,16 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
     private void LoadPlayerProgress()
     {
         _level = PlayerPrefs.GetInt("Level", 1);
-        _currentExperience = PlayerPrefs.GetFloat("CurrentExperience", 0f);
-        _maxExperience = PlayerPrefs.GetFloat("MaxExperience", _maxExperience);
+        _currentExperience = PlayerPrefs.GetInt("CurrentExperience", 0);
+        _maxExperience = PlayerPrefs.GetInt("MaxExperience", _maxExperience);
         Money = PlayerPrefs.GetInt("Money", Money);
     }
 
     private void SavePlayerProgress()
     {
         PlayerPrefs.SetInt("Level", _level);
-        PlayerPrefs.SetFloat("CurrentExperience", _currentExperience);
-        PlayerPrefs.SetFloat("MaxExperience", _maxExperience);
+        PlayerPrefs.SetInt("CurrentExperience", _currentExperience);
+        PlayerPrefs.SetInt("MaxExperience", _maxExperience);
         PlayerPrefs.SetInt("Money", Money);
         PlayerPrefs.Save();
     }

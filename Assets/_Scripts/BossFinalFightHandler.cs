@@ -7,7 +7,7 @@ public class BossFinalFightHandler : MonoBehaviour
     [SerializeField] private FightTrigger _fightTrigger;
     [SerializeField] private Player _player;
     [SerializeField] private Transform _cameraTarget;
-    [SerializeField] private float _transitionTime = 1.0f;
+    [SerializeField] private float _transitionTime = 2f;
     [SerializeField] private Boss _boss;
     [SerializeField] private GameObject _victoryCanvas;
 
