@@ -5,6 +5,9 @@ public class Circle : MonoBehaviour, IMovable
     [SerializeField] private float _rotationSpeed = 1000f;
     [SerializeField] private float _raycastDistance = 100f;
 
+    private float _minStartingRotation = 0f;
+    private float _maxStartingRotation = 360f;
+
     private bool _isRotating = false;
     private bool _canRotate = true;
     private Transform _selectedCircle;
@@ -15,6 +18,11 @@ public class Circle : MonoBehaviour, IMovable
         {
             Move();
         }
+    }
+
+    private void Start()
+    {
+        SetRandomStartingRotation();
     }
 
     public void Move()
@@ -44,5 +52,11 @@ public class Circle : MonoBehaviour, IMovable
             float mouseX = Input.GetAxis("Mouse X");
             _selectedCircle.transform.Rotate(Vector3.up, mouseX * _rotationSpeed * Time.deltaTime);
         }
+    }
+
+    private void SetRandomStartingRotation()
+    {
+        float randomRotation = Random.Range(_minStartingRotation, _maxStartingRotation);
+        transform.Rotate(Vector3.up, randomRotation);
     }
 }

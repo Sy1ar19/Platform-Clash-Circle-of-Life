@@ -32,6 +32,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
     public bool IsAlive { get; private set; } = true;
     public float ReceivedDamage { get; private set; }
     public bool WasAttacked { get; private set; }
+    public int Money { get; private set; }
 
     private void Awake()
     {
@@ -103,6 +104,11 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         //_rigidbody.MovePosition(_rigidbody.position + forwardDirection * _movementSpeed * Time.deltaTime);
         _rigidbody.velocity = forwardDirection * _movementSpeed;
         //_rigidbody.AddForce(forwardDirection);
+    }
+
+    public void AddMoney(int money)
+    {
+        Money += money;
     }
 
     private void OnEnemyLost()
