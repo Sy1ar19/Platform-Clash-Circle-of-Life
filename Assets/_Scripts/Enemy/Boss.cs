@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class Boss : Enemy
     [SerializeField] private AudioClip _audioClip;
 
     public readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
+
+    public event Action BossDied;
 
     private Player _target;
     private bool _isAttacking = false;
@@ -62,7 +65,7 @@ public class Boss : Enemy
 
         yield return new WaitForSeconds(delay);
 
-        target.ApplyDamage(damage + Random.Range(-1, 1));
+        target.ApplyDamage(damage + UnityEngine.Random.Range(-1, 1));
         EffectUtils.PerformEffect(_muzzleEffect, _audioSource, _audioClip);
 
         _animator.SetBool(IsAttacking, false);
@@ -76,5 +79,11 @@ public class Boss : Enemy
         {
             StopCoroutine(_attackCoroutine);
         }
+    }
+
+    public override void Die()
+    {
+        BossDied?.Invoke();
+        Destroy(gameObject);
     }
 }

@@ -6,6 +6,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected float _health;
     [SerializeField] protected float _damage;
+    [SerializeField] protected float _reward;
 
     public readonly int TakeDamage = Animator.StringToHash(nameof(TakeDamage));
 
@@ -40,7 +41,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
             Die();
     }
 
-    public void Die()
+    public virtual void Die()
     {
         Debug.Log("Die");
         Died?.Invoke();
