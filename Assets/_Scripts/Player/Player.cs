@@ -163,7 +163,6 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         {
             _enemy = enemy;
             _attackCoroutine = StartCoroutine(AttackWithDelay(enemy, _damage, _attackDelay));
-            _playerAnimations.PlayAttackAnimation(true);
         }
     }
 
@@ -175,7 +174,12 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         {
             enemy.ApplyDamage(damage + UnityEngine.Random.Range(-5, 5));
             EffectUtils.PerformEffect(_muzzleEffect, _audioSource, _audioClip);
-            _playerAnimations.PlayAttackAnimation(true);
+
+            if (CheckIfEnemyIsBoss(_enemy))
+            {
+                _playerAnimations.PlayAttackAnimation(true);
+            }
+
             yield return new WaitForSeconds(delay);
         }
 
@@ -190,6 +194,13 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         _currentExperience = PlayerPrefs.GetInt("CurrentExperience", 0);
         _maxExperience = PlayerPrefs.GetInt("MaxExperience", _maxExperience);
         Money = PlayerPrefs.GetInt("Money", Money);
+    }
+
+    private bool CheckIfEnemyIsBoss(Enemy enemy)
+    {
+        if (enemy is Boss)
+            return true;
+        return false;
     }
 
     private void SavePlayerProgress()

@@ -15,6 +15,7 @@ public class PlayerAnimations : MonoBehaviour
 
     public void PlayAttackAnimation(bool isAttacking)
     {
+        Debug.Log("attack anim");
         _animator.SetBool(IsAttacking, isAttacking);
     }
 
