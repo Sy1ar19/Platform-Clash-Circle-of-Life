@@ -1,18 +1,21 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(DisplayDamage), typeof(Animator))]
+[RequireComponent(typeof(DisplayDamage), typeof(Animator), typeof(EnemyAnimator))]
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] protected float _health;
     [SerializeField] protected float _damage;
     [SerializeField] protected int _moneyReward;
     [SerializeField] protected int _experienceReward;
+    protected EnemyAnimator _animator;
 
     public readonly int TakeDamage = Animator.StringToHash(nameof(TakeDamage));
+    public readonly int Win = Animator.StringToHash(nameof(Win));
 
     protected DisplayDamage _displayDamage;
-    protected Animator _animator;
+    protected bool _canShoot = true;
+    protected bool _isAlive = true;
 
     public event Action Died;
 
@@ -24,14 +27,13 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         CurrentHealth = _health;
         _displayDamage = GetComponent<DisplayDamage>();
-        _animator = GetComponent<Animator>();
+        _animator = GetComponent<EnemyAnimator>();
     }
 
     public void ApplyDamage(float damage)
     {
         ReceivedDamage = damage;
         _displayDamage.SpawnPopup(damage);
-        _animator.SetBool(TakeDamage, true);
 
         if (damage < 0)
             return;
@@ -44,7 +46,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     public virtual void Die()
     {
-        Debug.Log("Die");
         Died?.Invoke();
         Destroy(gameObject);
     }

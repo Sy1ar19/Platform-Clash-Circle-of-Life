@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class PlayerAnimations : MonoBehaviour
+public class PlayerAnimator : MonoBehaviour
 {
     private Animator _animator;
     public readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));

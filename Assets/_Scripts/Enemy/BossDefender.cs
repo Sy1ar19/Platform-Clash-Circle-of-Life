@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Animator), typeof(CapsuleCollider))]
 public class BossDefender : Enemy
 {
     [SerializeField] private float _raycastDistance = 60f;
@@ -14,14 +15,39 @@ public class BossDefender : Enemy
 
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _audioClip;
+    [SerializeField] private CapsuleCollider _capsuleCollider;
 
-    public readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
-    
     private Player _target;
     private bool _isAttacking = false;
     private Coroutine _attackCoroutine;
+    private float delay;
 
     private void Update()
+    {
+        //сделать таймер на автоатаку
+
+        if (_canShoot && _isAlive)
+        {
+            CheckForPlayerDetection();
+        }
+    }
+
+    public override void Die()
+    {
+        if (_target != null)
+        {
+            Debug.Log("Defender die");
+            _target.AddMoney(_moneyReward);
+            _target.AddExperience(_experienceReward);
+            _animator.PlayDieAnimation();
+            _capsuleCollider.enabled = false;
+            _isAlive = false;
+            _canShoot = false;
+            enabled = false;
+        }
+    }
+
+    private void CheckForPlayerDetection()
     {
         RaycastHit hit;
 
@@ -33,7 +59,6 @@ public class BossDefender : Enemy
 
             if (_target != null)
             {
-                Debug.Log("Player detected!");
                 if (_target.CurrentHealth <= 0)
                 {
                     _target = null;
@@ -50,25 +75,28 @@ public class BossDefender : Enemy
             _target = null;
         }
 
-        if (_target != null && !_isAttacking)
+        if (_target != null && _isAttacking == false && _canShoot == true)
         {
             _attackCoroutine = StartCoroutine(AttackWithDelay(_target, _damage, _attackDelay));
-            _animator.SetBool(IsAttacking, true);
+            _animator.PlayAttackAnimation(true);
         }
     }
 
     private IEnumerator AttackWithDelay(Player target, float damage, float delay)
     {
-        _isAttacking = true;
+        if(_isAlive)
+        {
+            _isAttacking = true;
 
-        yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay);
 
-        target.ApplyDamage(damage + UnityEngine.Random.Range(-1, 1));
-        EffectUtils.PerformEffect(_muzzleEffect, _audioSource, _audioClip);
+            target.ApplyDamage(damage + UnityEngine.Random.Range(-1, 1));
+            EffectUtils.PerformEffect(_muzzleEffect, _audioSource, _audioClip);
 
-        _animator.SetBool(IsAttacking, false);
+            _animator.PlayAttackAnimation(false);
 
-        _isAttacking = false;
+            _isAttacking = false;
+        }
     }
 
     private void OnDisable()
@@ -79,10 +107,17 @@ public class BossDefender : Enemy
         }
     }
 
-    public override void Die()
+    private void OnTriggerEnter(Collider other)
     {
-        _target.AddMoney(_moneyReward);
-        _target.AddExperience(_experienceReward);
-        Destroy(gameObject);
+        if (other.TryGetComponent<Player>(out Player player))
+        {
+            player.ApplyDamage(player.CurrentHealth);
+        }
     }
+
+    private void Shoot()
+    {
+
+    }
+
 }

@@ -15,8 +15,6 @@ public class Boss : Enemy
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _audioClip;
 
-    public readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
-
     public event Action BossDied;
 
     private Player _target;
@@ -24,6 +22,14 @@ public class Boss : Enemy
     private Coroutine _attackCoroutine;
 
     private void Update()
+    {
+        if(_canShoot)
+        {
+            CheckForPlayerDetection();
+        }
+    }
+
+    private void CheckForPlayerDetection()
     {
         RaycastHit hit;
 
@@ -35,7 +41,6 @@ public class Boss : Enemy
 
             if (_target != null)
             {
-                Debug.Log("Player detected!");
                 if (_target.CurrentHealth <= 0)
                 {
                     _target = null;
@@ -52,10 +57,10 @@ public class Boss : Enemy
             _target = null;
         }
 
-        if (_target != null && !_isAttacking)
+        if (_target != null && _isAttacking == false)
         {
             _attackCoroutine = StartCoroutine(AttackWithDelay(_target, _damage, _attackDelay));
-            _animator.SetBool(IsAttacking, true);
+            _animator.PlayAttackAnimation(true);
         }
     }
 
@@ -68,7 +73,7 @@ public class Boss : Enemy
         target.ApplyDamage(damage + UnityEngine.Random.Range(-1, 1));
         EffectUtils.PerformEffect(_muzzleEffect, _audioSource, _audioClip);
 
-        _animator.SetBool(IsAttacking, false);
+        _animator.PlayAttackAnimation(_isAttacking == false);
 
         _isAttacking = false;
     }
@@ -86,6 +91,7 @@ public class Boss : Enemy
         BossDied?.Invoke();
         _target.AddMoney(_moneyReward);
         _target.AddExperience(_experienceReward);
-        Destroy(gameObject);
+        _animator.PlayDieAnimation();
+        _canShoot = false;
     }
 }

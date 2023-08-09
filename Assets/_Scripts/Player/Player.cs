@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-[RequireComponent(typeof(Rigidbody), typeof(PlayerAnimations), typeof(EnemyDetector))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerAnimator), typeof(EnemyDetector))]
 [RequireComponent(typeof(DisplayDamage))]
 public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
 {
@@ -20,15 +20,17 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
 
     public event Action<int> MoneyIncreased;
     public event Action<int> ExperienceChanged;
+    public event Action Died;
 
     private int _currentExperience = 0;
     private int _level = 1;
     private int _levelMoney = 0;
     private Enemy _enemy;
     private Rigidbody _rigidbody;
-    private PlayerAnimations _playerAnimations;
+    private PlayerAnimator _playerAnimations;
     private bool _canMove = true;
     private bool _isAttacking = false;
+    private bool _isDied = false;
     public readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
     public readonly int IsDying = Animator.StringToHash(nameof(IsDying));
     public readonly int Win = Animator.StringToHash(nameof(Win));
@@ -53,7 +55,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         _displayDamage = GetComponent<DisplayDamage>();
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.freezeRotation = true;
-        _playerAnimations = GetComponent<PlayerAnimations>();
+        _playerAnimations = GetComponent<PlayerAnimator>();
         CurrentHealth = _health;
         _levelMoney = 0;
 
@@ -80,9 +82,10 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
     public void Die()
     {
         IsAlive = false;
+        _isAttacking = false;
         StopMove();
         _playerAnimations.PlayDeathAnimation();
-        Debug.Log("Die");
+        Died?.Invoke();
     }
 
     public void StopMove()
@@ -100,6 +103,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         if (damage < 0)
             return;
 
+        Debug.Log(damage);
         _displayDamage.SpawnPopup(damage);
 
         CurrentHealth -= damage;
@@ -170,8 +174,9 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
     {
         _isAttacking = true;
 
-        while (_enemy != null && _enemy.CurrentHealth > 0)
+        while (_enemy != null && _enemy.CurrentHealth > 0 && IsAlive)
         {
+            Debug.Log("Player shoot");
             enemy.ApplyDamage(damage + UnityEngine.Random.Range(-5, 5));
             EffectUtils.PerformEffect(_muzzleEffect, _audioSource, _audioClip);
 
