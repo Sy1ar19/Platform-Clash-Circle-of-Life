@@ -9,7 +9,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
 {
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _health;
-    [SerializeField] private float _damage;
+    [SerializeField] private int _damage;
     [SerializeField] private float _attackDelay = 1.0f;
     [SerializeField] private int _maxExperience = 100;
 
@@ -25,9 +25,9 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
     private int _currentExperience = 0;
     private int _level = 1;
     private int _levelMoney = 0;
-    private Enemy _enemy;
+    private IDamageable _enemy;
     private Rigidbody _rigidbody;
-    private PlayerAnimator _playerAnimations;
+    private PlayerAnimator _playerAnimator;
     private bool _canMove = true;
     private bool _isAttacking = false;
     private bool _isDied = false;
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         _displayDamage = GetComponent<DisplayDamage>();
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.freezeRotation = true;
-        _playerAnimations = GetComponent<PlayerAnimator>();
+        _playerAnimator = GetComponent<PlayerAnimator>();
         CurrentHealth = _health;
         _levelMoney = 0;
 
@@ -84,7 +84,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         IsAlive = false;
         _isAttacking = false;
         StopMove();
-        _playerAnimations.PlayDeathAnimation();
+        _playerAnimator.PlayDeathAnimation();
         Died?.Invoke();
     }
 
@@ -93,7 +93,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         _canMove = false;
     }
 
-    public void Attack(Enemy enemy, float damage)
+    public void Attack(IDamageable enemy, int damage)
     {
         enemy.ApplyDamage(damage);
     }
@@ -110,11 +110,6 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
 
         if (CurrentHealth <= 0)
             Die();
-    }
-
-    public void PlayVictoryAnimation()
-    {
-        _playerAnimations.PlayVictoryAnimation();
     }
 
     public void Move()
@@ -157,11 +152,11 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
             _isAttacking = false;
         }
 
-        _playerAnimations.PlayAttackAnimation(false);
+        _playerAnimator.PlayAttackAnimation(false);
         _enemy = null;
     }
 
-    private void OnEnemyDetected(Enemy enemy)
+    private void OnEnemyDetected(IDamageable enemy)
     {
         if (!_isAttacking && _enemy == null)
         {
@@ -170,11 +165,11 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         }
     }
 
-    private IEnumerator AttackWithDelay(Enemy enemy, float damage, float delay)
+    private IEnumerator AttackWithDelay(IDamageable enemy, int damage, float delay)
     {
         _isAttacking = true;
 
-        while (_enemy != null && _enemy.CurrentHealth > 0 && IsAlive)
+        while (_enemy != null && _enemy.GetCurrentHealth() > 0 && IsAlive)
         {
             Debug.Log("Player shoot");
             enemy.ApplyDamage(damage + UnityEngine.Random.Range(-5, 5));
@@ -182,13 +177,13 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
 
             if (CheckIfEnemyIsBoss(_enemy))
             {
-                _playerAnimations.PlayAttackAnimation(true);
+                _playerAnimator.PlayAttackAnimation(true);
             }
 
             yield return new WaitForSeconds(delay);
         }
 
-        _playerAnimations.PlayAttackAnimation(false);
+        _playerAnimator.PlayAttackAnimation(false);
         _isAttacking = false;
         _enemy = null;
     }
@@ -201,7 +196,7 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         Money = PlayerPrefs.GetInt("Money", Money);
     }
 
-    private bool CheckIfEnemyIsBoss(Enemy enemy)
+    private bool CheckIfEnemyIsBoss(IDamageable enemy)
     {
         if (enemy is Boss)
             return true;
@@ -215,5 +210,15 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
         PlayerPrefs.SetInt("MaxExperience", _maxExperience);
         PlayerPrefs.SetInt("Money", Money);
         PlayerPrefs.Save();
+    }
+
+    public void ApplyDamage(int damage)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int GetCurrentHealth()
+    {
+        throw new NotImplementedException();
     }
 }

@@ -17,7 +17,7 @@ public class Boss : Enemy
 
     public event Action BossDied;
 
-    private Player _target;
+    private PlayerHealth _target;
     private bool _isAttacking = false;
     private Coroutine _attackCoroutine;
 
@@ -37,7 +37,7 @@ public class Boss : Enemy
         {
             Debug.DrawRay(_shootPoint.position, transform.forward * _raycastDistance, _rayColor);
 
-            _target = hit.collider.GetComponent<Player>();
+            _target = hit.collider.GetComponent<PlayerHealth>();
 
             if (_target != null)
             {
@@ -64,7 +64,7 @@ public class Boss : Enemy
         }
     }
 
-    private IEnumerator AttackWithDelay(Player target, float damage, float delay)
+    private IEnumerator AttackWithDelay(PlayerHealth target, int damage, float delay)
     {
         _isAttacking = true;
 
@@ -89,8 +89,8 @@ public class Boss : Enemy
     public override void Die()
     {
         BossDied?.Invoke();
-        _target.AddMoney(_moneyReward);
-        _target.AddExperience(_experienceReward);
+        //_target.AddMoney(_moneyReward);
+        //_target.AddExperience(_experienceReward);
         _animator.PlayDieAnimation();
         _canShoot = false;
     }

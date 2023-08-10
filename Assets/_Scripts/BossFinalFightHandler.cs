@@ -5,11 +5,14 @@ using UnityEngine;
 public class BossFinalFightHandler : MonoBehaviour
 {
     [SerializeField] private FightTrigger _fightTrigger;
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerHealth _player;
     [SerializeField] private Transform _cameraTarget;
     [SerializeField] private float _transitionTime = 2f;
-    [SerializeField] private Boss _boss;
+    [SerializeField] private BossHealth _boss;
     [SerializeField] private GameObject _victoryCanvas;
+    [SerializeField] private PlayerAnimator _playerAnimator;
+    [SerializeField] private PlayerMover _playerMover;
+
 
     private void OnEnable()
     {
@@ -25,7 +28,7 @@ public class BossFinalFightHandler : MonoBehaviour
 
     private void OnBossDied()
     {
-        _player.PlayVictoryAnimation();
+        _playerAnimator.PlayVictoryAnimation();
         StartCoroutine(ShowVictoryCanvasAfterDelay());
 
     }
@@ -39,7 +42,8 @@ public class BossFinalFightHandler : MonoBehaviour
     private void OnFightStarted()
     {
         Debug.Log("Fight");
-        _player.TryGetComponent<Rigidbody>(out Rigidbody playerRigidbody);
-        _player.StopMove();
+        _playerMover.TryGetComponent<Rigidbody>(out Rigidbody playerRigidbody);
+        _playerMover.StopMove();
+        _playerAnimator.PlayAttackAnimation(true);
     }
 }

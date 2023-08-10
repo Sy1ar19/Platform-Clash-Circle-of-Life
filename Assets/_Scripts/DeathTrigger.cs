@@ -4,9 +4,9 @@ public class DeahtTrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Player>(out Player player))
+        if (other.TryGetComponent<PlayerHealth>(out PlayerHealth player))
         {
-            player.Die();
+            player.ApplyDamage(player.CurrentHealth);
         }
     }
 }

@@ -9,7 +9,7 @@ public class FightTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Player>(out Player player))
+        if (other.TryGetComponent<PlayerHealth>(out PlayerHealth player))
         {
             IsFightStarted = true;
             FightStarted?.Invoke();

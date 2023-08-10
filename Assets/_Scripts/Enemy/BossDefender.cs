@@ -17,7 +17,7 @@ public class BossDefender : Enemy
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private CapsuleCollider _capsuleCollider;
 
-    private Player _target;
+    private PlayerHealth _target;
     private bool _isAttacking = false;
     private Coroutine _attackCoroutine;
     private float delay;
@@ -28,7 +28,7 @@ public class BossDefender : Enemy
 
         if (_canShoot && _isAlive)
         {
-            CheckForPlayerDetection();
+            /*CheckForPlayerDetection();*/
         }
     }
 
@@ -37,8 +37,8 @@ public class BossDefender : Enemy
         if (_target != null)
         {
             Debug.Log("Defender die");
-            _target.AddMoney(_moneyReward);
-            _target.AddExperience(_experienceReward);
+            //_target.AddMoney(_moneyReward);
+            //_target.AddExperience(_experienceReward);
             _animator.PlayDieAnimation();
             _capsuleCollider.enabled = false;
             _isAlive = false;
@@ -47,7 +47,9 @@ public class BossDefender : Enemy
         }
     }
 
-    private void CheckForPlayerDetection()
+
+
+/*    private void CheckForPlayerDetection()
     {
         RaycastHit hit;
 
@@ -55,7 +57,7 @@ public class BossDefender : Enemy
         {
             Debug.DrawRay(_shootPoint.position, transform.forward * _raycastDistance, _rayColor);
 
-            _target = hit.collider.GetComponent<Player>();
+            _target = hit.collider.GetComponent<PlayerHealth>();
 
             if (_target != null)
             {
@@ -80,9 +82,9 @@ public class BossDefender : Enemy
             _attackCoroutine = StartCoroutine(AttackWithDelay(_target, _damage, _attackDelay));
             _animator.PlayAttackAnimation(true);
         }
-    }
+    }*/
 
-    private IEnumerator AttackWithDelay(Player target, float damage, float delay)
+    private IEnumerator AttackWithDelay(PlayerHealth target, int damage, float delay)
     {
         if(_isAlive)
         {
@@ -109,7 +111,7 @@ public class BossDefender : Enemy
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Player>(out Player player))
+        if (other.TryGetComponent<PlayerHealth>(out PlayerHealth player))
         {
             player.ApplyDamage(player.CurrentHealth);
         }

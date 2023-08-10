@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerHealth _player;
 
     private string _attackParamName = "IsAttacking";
     private string _winParamName = "Win";

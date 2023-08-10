@@ -4,8 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(DisplayDamage), typeof(Animator), typeof(EnemyAnimator))]
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] protected float _health;
-    [SerializeField] protected float _damage;
+    [SerializeField] protected int _health;
+    [SerializeField] protected int _damage;
     [SerializeField] protected int _moneyReward;
     [SerializeField] protected int _experienceReward;
     protected EnemyAnimator _animator;
@@ -19,7 +19,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     public event Action Died;
 
-    public float CurrentHealth { get; private set; }
+    public int CurrentHealth { get; private set; }
     public bool WasAttacked { get; private set; }
     public float ReceivedDamage { get; private set; }
 
@@ -30,7 +30,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         _animator = GetComponent<EnemyAnimator>();
     }
 
-    public void ApplyDamage(float damage)
+    public void ApplyDamage(int damage)
     {
         ReceivedDamage = damage;
         _displayDamage.SpawnPopup(damage);
@@ -48,5 +48,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         Died?.Invoke();
         Destroy(gameObject);
+    }
+
+    public int GetCurrentHealth()
+    {
+        return CurrentHealth;
     }
 }

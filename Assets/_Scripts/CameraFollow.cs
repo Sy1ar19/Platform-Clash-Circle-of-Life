@@ -9,7 +9,8 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float _followSpeed = 5;
     [SerializeField] private float _rotationSpeed = 5;
     [SerializeField] private FightTrigger _fightTrigger;
-    [SerializeField] private Player _player;
+    [SerializeField] private GameObject _player;
+    [SerializeField] private PlayerHealth _playerHealth;
 
     private bool _isFightStarted = false;
     private bool _isMovingCamera = false;
@@ -17,7 +18,7 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_player != null && _player.IsAlive && !_isFightStarted && !_isMovingCamera)
+        if (_player != null && _playerHealth.IsAlive && _isFightStarted==false && _isMovingCamera==false)
         {
             Vector3 targetPosition = _player.transform.position + _offset;
             transform.position = Vector3.Lerp(transform.position, targetPosition, _followSpeed * Time.deltaTime);

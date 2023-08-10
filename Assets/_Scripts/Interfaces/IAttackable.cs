@@ -1,4 +1,4 @@
 public interface IAttackable
 {
-    void Attack(Enemy enemy, float damage);
+    void Attack(IDamageable enemy, int damage);
 }

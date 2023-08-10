@@ -4,6 +4,7 @@ public class Circle : MonoBehaviour, IMovable
 {
     [SerializeField] private float _rotationSpeed = 1000f;
     [SerializeField] private float _raycastDistance = 100f;
+    [SerializeField] private LayerMask _fightTriggerMask;
 
     private float _minStartingRotation = 0f;
     private float _maxStartingRotation = 360f;
@@ -32,7 +33,7 @@ public class Circle : MonoBehaviour, IMovable
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, _raycastDistance))
+            if (Physics.Raycast(ray, out hit, _raycastDistance, _fightTriggerMask))
             {
                 if (hit.collider.TryGetComponent<DeahtTrigger>(out DeahtTrigger deahtTrigger))
                 {

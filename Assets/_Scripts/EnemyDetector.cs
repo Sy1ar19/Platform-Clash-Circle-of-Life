@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class EnemyDetector : MonoBehaviour
 {
-    public event System.Action<Enemy> EnemyDetected;
+    public event System.Action<IDamageable> EnemyDetected;
     public event System.Action EnemyLost;
+    private IDamageable _detectedEnemy;
 
-    [SerializeField] private Transform _shootPoint;
+/*    [SerializeField] private Transform _shootPoint;
     [SerializeField] private float _raycastDistance = 60f;
     [SerializeField] private Color _rayColor = Color.red;
+*/
 
-    private Enemy _detectedEnemy;
-
-    private void Update()
+/*    private void Update()
     {
         RaycastHit hit;
 
@@ -46,6 +46,31 @@ public class EnemyDetector : MonoBehaviour
                 _detectedEnemy = null;
                 EnemyLost?.Invoke();
             }
+        }
+    }*/
+
+    private void OnTriggerEnter(Collider other)
+    {
+        IDamageable enemy = other.GetComponent<IDamageable>();
+
+        if (enemy != null && enemy.GetCurrentHealth() > 0)
+        {
+            if (_detectedEnemy != enemy)
+            {
+                _detectedEnemy = enemy;
+                EnemyDetected?.Invoke(enemy);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        IDamageable enemy = other.GetComponent<IDamageable>();
+
+        if (enemy != null && enemy == _detectedEnemy)
+        {
+            _detectedEnemy = null;
+            EnemyLost?.Invoke();
         }
     }
 }

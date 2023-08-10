@@ -8061,6 +8061,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slider_IconType05
       objectReference: {fileID: 0}
+    - target: {fileID: 6888281657646819366, guid: 996493bb8021aec4f9470eca0e448e21, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7472674821395020785, guid: 996493bb8021aec4f9470eca0e448e21, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -24886,7 +24890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6074775343586414632, guid: a23050195b985cb4492940cecf15da91, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 154.50003
       objectReference: {fileID: 0}
     - target: {fileID: 6074775343586414632, guid: a23050195b985cb4492940cecf15da91, type: 3}
       propertyPath: m_AnchoredPosition.y
