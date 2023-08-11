@@ -17,8 +17,11 @@ public class PlayerHealth : MonoBehaviour , IDamageable
     public bool IsAlive => _isAlive;
     public int CurrentHealth { get; private set; }
 
+    public int Reward => throw new NotImplementedException();
+
     private void Awake()
     {
+        //_health = PlayerPrefs.GetInt("PlayerHelth");
         CurrentHealth = _health;
         _displayDamage = GetComponent<DisplayDamage>();
         _playerMover = GetComponent<PlayerMover>();
@@ -29,7 +32,6 @@ public class PlayerHealth : MonoBehaviour , IDamageable
     {
         if (damage < 0)
             return;
-        Debug.Log("damage");
 
         _health -= damage;
         _displayDamage.SpawnPopup(damage);
@@ -45,6 +47,7 @@ public class PlayerHealth : MonoBehaviour , IDamageable
         _isAlive = false;
         _playerMover.StopMove();
         _playerAnimator.PlayDeathAnimation();
+        Debug.Log("Player died");
         Died?.Invoke();
     }
 

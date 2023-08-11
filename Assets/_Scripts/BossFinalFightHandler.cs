@@ -41,7 +41,6 @@ public class BossFinalFightHandler : MonoBehaviour
 
     private void OnFightStarted()
     {
-        Debug.Log("Fight");
         _playerMover.TryGetComponent<Rigidbody>(out Rigidbody playerRigidbody);
         _playerMover.StopMove();
         _playerAnimator.PlayAttackAnimation(true);

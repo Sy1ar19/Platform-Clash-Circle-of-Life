@@ -48,6 +48,8 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
     public int Level => _level;
     public int LevelMoney => _levelMoney;
 
+    public int Reward => throw new NotImplementedException();
+
     private void Awake()
     {
         //PlayerPrefs.DeleteAll();

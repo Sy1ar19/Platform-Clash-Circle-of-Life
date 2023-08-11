@@ -25,7 +25,6 @@ public class EnemyAnimator : MonoBehaviour
 
     private void OnPlayerDied()
     {
-        Debug.Log("Player Died");
         PlayWinAnimation();
     }
 

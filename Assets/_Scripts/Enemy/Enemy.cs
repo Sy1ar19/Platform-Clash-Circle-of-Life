@@ -23,6 +23,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public bool WasAttacked { get; private set; }
     public float ReceivedDamage { get; private set; }
 
+    public bool IsAlive => throw new NotImplementedException();
+
+    public int Reward => throw new NotImplementedException();
+
     private void Awake()
     {
         CurrentHealth = _health;

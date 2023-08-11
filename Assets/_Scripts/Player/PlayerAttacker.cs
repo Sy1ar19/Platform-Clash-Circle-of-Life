@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyDetector), typeof(PlayerAnimator), typeof(PlayerHealth))]
+[RequireComponent(typeof(PlayerMoney), typeof(PlayerAnimator), typeof(PlayerHealth))]
 public class PlayerAttacker : MonoBehaviour
 {
     [SerializeField] private int _damage;
@@ -16,12 +16,14 @@ public class PlayerAttacker : MonoBehaviour
     private Coroutine _attackCoroutine;
     private PlayerAnimator _playerAnimator;
     private PlayerHealth _playerHealth;
+    private PlayerMoney _playerMoney;
     private IDamageable _enemy;
 
     private void Awake()
     {
         _playerAnimator = GetComponent<PlayerAnimator>();
         _playerHealth = GetComponent<PlayerHealth>();
+        _playerMoney = GetComponent<PlayerMoney>();
     }
 
     private void OnEnable()
@@ -70,7 +72,6 @@ public class PlayerAttacker : MonoBehaviour
 
         while (_enemy != null && _enemy.GetCurrentHealth() > 0 && _playerHealth.IsAlive)
         {
-            Debug.Log("Player shoot");
             enemy.ApplyDamage(damage + UnityEngine.Random.Range(-5, 5));
             EffectUtils.PerformEffect(_muzzleEffect, _audioSource, _audioClip);
 
@@ -79,8 +80,14 @@ public class PlayerAttacker : MonoBehaviour
                 _playerAnimator.PlayAttackAnimation(true);
             }
 
+            if (enemy.IsAlive == false)
+            {
+                _playerMoney.EarnMoney(enemy.Reward);
+            }
+
             yield return new WaitForSeconds(delay);
         }
+
 
         _playerAnimator.PlayAttackAnimation(false);
         _isAttacking = false;

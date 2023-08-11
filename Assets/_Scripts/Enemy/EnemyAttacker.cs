@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAttacker : MonoBehaviour
@@ -18,6 +17,8 @@ public class EnemyAttacker : MonoBehaviour
     protected EnemyAnimator _enemyAnimator;
     private IDamageable _health;
     private Coroutine _attackCoroutine;
+
+    public IDamageable Target => _enemy;
 
     private void OnEnable()
     {
@@ -45,8 +46,6 @@ public class EnemyAttacker : MonoBehaviour
 
     private void OnEnemyDetected(IDamageable enemy)
     {
-        //Debug.Log(enemy);
-
         if (_isAttacking == false && _enemy == null)
         {
             _enemy = enemy;

@@ -6,7 +6,7 @@ using UnityEngine;
 public class RewardDisplay : MonoBehaviour
 {
     [SerializeField] private TMP_Text _moneyText;
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerMoney _playerMoney;
     [SerializeField] private AdvertisementButton _advertisementButton;
 
     private void OnMoneyChanged(int newMoney)
@@ -22,14 +22,15 @@ public class RewardDisplay : MonoBehaviour
 
     private void OnEnable()
     {
-       // _player.MoneyIncreased += OnMoneyChanged;
+        _playerMoney.MoneyChanged += OnMoneyChanged;
+
         _advertisementButton.WatchedAd += OnMoneyChanged;
-        _moneyText.text = _player.LevelMoney.ToString();
+        _moneyText.text = _playerMoney.LevelMoney.ToString();
     }
 
     private void OnDisable()
     {
-        //_player.MoneyIncreased -= OnMoneyChanged;
+        _playerMoney.MoneyChanged -= OnMoneyChanged;
         _advertisementButton.WatchedAd -= OnMoneyChanged;
     }
 }

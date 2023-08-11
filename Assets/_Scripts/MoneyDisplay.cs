@@ -1,35 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class MoneyDisplay : MonoBehaviour
 {
     [SerializeField] private TMP_Text _moneyText;
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerMoney _playerMoney;
 
     private void Start()
     {
-        UpdateMoneyDisplay(_player.Money);
+        UpdateMoneyDisplay(_playerMoney.Money);
     }
 
     private void OnMoneyChanged(int newMoney)
     {
-        UpdateMoneyDisplay(newMoney);
+        int currentMoney = int.Parse(_moneyText.text);
+        UpdateMoneyDisplay(currentMoney + newMoney);
     }
 
-    private void UpdateMoneyDisplay(float moneyAmount)
+    private void UpdateMoneyDisplay(int moneyAmount)
     {
         _moneyText.text = moneyAmount.ToString();
     }
 
     private void OnEnable()
     {
-        _player.MoneyIncreased += OnMoneyChanged;
+        _playerMoney.MoneyChanged += OnMoneyChanged;
     }
 
     private void OnDisable()
     {
-        _player.MoneyIncreased -= OnMoneyChanged;
+        _playerMoney.MoneyChanged -= OnMoneyChanged;
     }
 }

@@ -1,14 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AdvertisementButton : MonoBehaviour
 {
     [SerializeField] private Button _button;
-    [SerializeField] private Player _player;
-    [SerializeField] private int _coinsMultiplier = 2; // Удвоение монет
+    [SerializeField] private PlayerMoney _playerMoney;
+    [SerializeField] private int _coinsMultiplier = 2;
 
     public event Action<int> WatchedAd;
     private bool _isCoinMultiplierUsed = false;
@@ -22,16 +20,15 @@ public class AdvertisementButton : MonoBehaviour
     {
         if (_isCoinMultiplierUsed == false)
         {
-            //int additionalCoins = _player.LevelMoney * _coinsMultiplier/2;
-            int additionalCoins = _player.LevelMoney;
-            WatchedAd?.Invoke(additionalCoins);
-            _player.AddMoney(additionalCoins);
-            _button.interactable = false;
-            _isCoinMultiplierUsed = true;
-        }
-        
+            if (_playerMoney.LevelMoney > 0)
+            {
+                int additionalCoins = _playerMoney.LevelMoney;
 
-        // Обновление UI с монетами
-        //_player.MoneyChanged?.Invoke(_player.Money);
+                //WatchedAd?.Invoke(_playerMoney.LevelMoney);
+                _playerMoney.EarnMoney(_playerMoney.LevelMoney);
+                _button.interactable = false;
+                _isCoinMultiplierUsed = true;
+            }
+        }
     }
 }
