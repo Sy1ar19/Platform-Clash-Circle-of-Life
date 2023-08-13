@@ -48,7 +48,9 @@ public class Player : MonoBehaviour, IMovable, IDamageable, IAttackable
     public int Level => _level;
     public int LevelMoney => _levelMoney;
 
-    public int Reward => throw new NotImplementedException();
+    public int MoneyReward => throw new NotImplementedException();
+
+    public int ExperienceReward => throw new NotImplementedException();
 
     private void Awake()
     {

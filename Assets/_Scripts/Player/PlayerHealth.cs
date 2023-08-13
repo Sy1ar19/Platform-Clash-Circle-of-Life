@@ -17,7 +17,9 @@ public class PlayerHealth : MonoBehaviour , IDamageable
     public bool IsAlive => _isAlive;
     public int CurrentHealth { get; private set; }
 
-    public int Reward => throw new NotImplementedException();
+    public int MoneyReward => throw new NotImplementedException();
+
+    public int ExperienceReward => throw new NotImplementedException();
 
     private void Awake()
     {
@@ -47,7 +49,6 @@ public class PlayerHealth : MonoBehaviour , IDamageable
         _isAlive = false;
         _playerMover.StopMove();
         _playerAnimator.PlayDeathAnimation();
-        Debug.Log("Player died");
         Died?.Invoke();
     }
 

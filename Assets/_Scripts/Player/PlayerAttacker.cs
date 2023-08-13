@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMoney), typeof(PlayerAnimator), typeof(PlayerHealth))]
+[RequireComponent (typeof(PlayerExperience))]
 public class PlayerAttacker : MonoBehaviour
 {
     [SerializeField] private int _damage;
@@ -17,6 +18,7 @@ public class PlayerAttacker : MonoBehaviour
     private PlayerAnimator _playerAnimator;
     private PlayerHealth _playerHealth;
     private PlayerMoney _playerMoney;
+    private PlayerExperience _playerExperience;
     private IDamageable _enemy;
 
     private void Awake()
@@ -24,6 +26,7 @@ public class PlayerAttacker : MonoBehaviour
         _playerAnimator = GetComponent<PlayerAnimator>();
         _playerHealth = GetComponent<PlayerHealth>();
         _playerMoney = GetComponent<PlayerMoney>();
+        _playerExperience = GetComponent<PlayerExperience>();
     }
 
     private void OnEnable()
@@ -82,7 +85,8 @@ public class PlayerAttacker : MonoBehaviour
 
             if (enemy.IsAlive == false)
             {
-                _playerMoney.EarnMoney(enemy.Reward);
+                _playerMoney.EarnMoney(enemy.MoneyReward);
+                _playerExperience.AddExperience(enemy.ExperienceReward);
             }
 
             yield return new WaitForSeconds(delay);

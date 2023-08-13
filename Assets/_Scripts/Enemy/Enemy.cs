@@ -25,7 +25,9 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     public bool IsAlive => throw new NotImplementedException();
 
-    public int Reward => throw new NotImplementedException();
+    public int MoneyReward => throw new NotImplementedException();
+
+    public int ExperienceReward => throw new NotImplementedException();
 
     private void Awake()
     {

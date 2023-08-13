@@ -24,13 +24,13 @@ public class RewardDisplay : MonoBehaviour
     {
         _playerMoney.MoneyChanged += OnMoneyChanged;
 
-        _advertisementButton.WatchedAd += OnMoneyChanged;
+       // _advertisementButton.WatchedAd += OnMoneyChanged;
         _moneyText.text = _playerMoney.LevelMoney.ToString();
     }
 
     private void OnDisable()
     {
         _playerMoney.MoneyChanged -= OnMoneyChanged;
-        _advertisementButton.WatchedAd -= OnMoneyChanged;
+        //_advertisementButton.WatchedAd -= OnMoneyChanged;
     }
 }

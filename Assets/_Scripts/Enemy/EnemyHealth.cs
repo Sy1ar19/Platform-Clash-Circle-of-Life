@@ -7,7 +7,8 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] protected int _health;
-    [SerializeField] protected int _reward;
+    [SerializeField] protected int _moneyReward;
+    [SerializeField] protected int _experienceReward;
 
     public event Action Died;
 
@@ -15,7 +16,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     protected EnemyAnimator _enemyAnimator;
     protected EnemyAttacker _enemyAttacker;
     protected bool _isAlive = true;
-    public int Reward => _reward;
+    public int MoneyReward => _moneyReward;
+    public int ExperienceReward => _experienceReward;
 
     public bool IsAlive => _isAlive;
     public int CurrentHealth { get; private set; }
