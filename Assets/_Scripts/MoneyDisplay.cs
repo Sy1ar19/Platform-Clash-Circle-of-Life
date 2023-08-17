@@ -25,6 +25,7 @@ public class MoneyDisplay : MonoBehaviour
     private void OnEnable()
     {
         _playerMoney.MoneyChanged += OnMoneyChanged;
+        UpdateMoneyDisplay(_playerMoney.Money);
     }
 
     private void OnDisable()

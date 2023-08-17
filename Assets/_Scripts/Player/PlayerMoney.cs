@@ -4,19 +4,28 @@ using UnityEngine;
 public class PlayerMoney : MonoBehaviour
 {
     private const string MoneyKey = "PlayerMoney";
+    private const string GoldMultiplierKey = "PlayerGoldMultiplier";
 
     public event Action<int> MoneyChanged;
 
-    private int _money;
+    [SerializeField] private int _money = 0;
     private int _levelMoney;
+    private int _goldMultiplier = 1;
 
     public int LevelMoney => _levelMoney;
     public int Money => _money;
+    public int GoldMultiplier => _goldMultiplier;
 
-    private void Start()
+    private void Awake()
     {
-        _money = PlayerPrefs.GetInt(MoneyKey, 0);
+        _money = SaveLoadSystem.LoadData<int>(MoneyKey, Money);
+        _goldMultiplier = SaveLoadSystem.LoadData<int>(GoldMultiplierKey, _goldMultiplier);
         _levelMoney = 0;
+    }
+
+    private void Update()
+    {
+        _goldMultiplier = SaveLoadSystem.LoadData<int>(GoldMultiplierKey, GoldMultiplier);
     }
 
     public void EarnMoney(int amount)
@@ -41,6 +50,7 @@ public class PlayerMoney : MonoBehaviour
 
     private void SaveMoney()
     {
-        PlayerPrefs.SetInt(MoneyKey, _money);
+        SaveLoadSystem.SaveData<int>(MoneyKey, _money);
+        SaveLoadSystem.SaveData<int>(GoldMultiplierKey, _goldMultiplier);
     }
 }

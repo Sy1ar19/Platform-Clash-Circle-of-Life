@@ -5,6 +5,7 @@ public class CameraFollow : MonoBehaviour
 {
 
     [SerializeField] private Transform _fightCameraPosition;
+    [SerializeField] private Transform _fightMobileCameraPosition;
     [SerializeField] private Vector3 _offset;
     [SerializeField] private float _followSpeed = 5;
     [SerializeField] private float _rotationSpeed = 5;
@@ -49,13 +50,27 @@ public class CameraFollow : MonoBehaviour
 
     private void ChangeFightCameraPosition()
     {
-        if (_fightCameraPosition != null)
+        if (Screen.width > Screen.height)
         {
-            Vector3 targetPosition = _fightCameraPosition.position + new Vector3(0f, 10f, 0f);
-            Quaternion targetRotation = _fightCameraPosition.rotation;
+            if (_fightCameraPosition != null)
+            {
+                Vector3 targetPosition = _fightCameraPosition.position + new Vector3(0f, 10f, 0f);
+                Quaternion targetRotation = _fightCameraPosition.rotation;
 
-            SmoothMoveCamera(targetPosition, targetRotation);
+                SmoothMoveCamera(targetPosition, targetRotation);
+            }
         }
+        else
+        {
+            if (_fightCameraPosition != null)
+            {
+                Vector3 targetPosition = _fightMobileCameraPosition.position + new Vector3(0f, 10f, 0f);
+                Quaternion targetRotation = _fightMobileCameraPosition.rotation;
+
+                SmoothMoveCamera(targetPosition, targetRotation);
+            }
+        }
+        
     }
 
     private void SmoothMoveCamera(Vector3 targetPosition, Quaternion targetRotation)

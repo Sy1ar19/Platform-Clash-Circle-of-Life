@@ -9,14 +9,30 @@ public class ExperienceSlider : MonoBehaviour
     [SerializeField] private TMP_Text _levelText;
     [SerializeField] private PlayerExperience _playerExperience;
 
+    [SerializeField] private Transform _experiencePosition;
+    [SerializeField] private Transform _experienceMobilePosition;
+
     private void Start()
     {
         UpdateExperienceSlider(_playerExperience.CurrentExperience);
+        CheckScreenOrientation();
     }
 
     private void OnExperienceChanged(int newExperience)
     {
         UpdateExperienceSlider(newExperience);
+    }
+
+    private void CheckScreenOrientation()
+    {
+        if (Screen.width > Screen.height)
+        {
+            transform.position = _experiencePosition.position;
+        }
+        else
+        {
+            transform.position = _experienceMobilePosition.position;
+        }
     }
 
     private void UpdateExperienceSlider(float experience)
