@@ -30,9 +30,9 @@ public class PlayerMoney : MonoBehaviour
 
     public void EarnMoney(int amount)
     {
-        _money += amount;
-        _levelMoney += amount;
-        MoneyChanged?.Invoke(amount);
+        _money += amount * _goldMultiplier;
+        _levelMoney += amount * _goldMultiplier;
+        MoneyChanged?.Invoke(amount * _goldMultiplier);
         SaveMoney();
     }
 

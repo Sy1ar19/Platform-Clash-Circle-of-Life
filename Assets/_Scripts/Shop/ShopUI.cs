@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,13 +34,11 @@ public class ShopUI : MonoBehaviour
     private void OnEnable()
     {
         _playerAttacker.MaxCriticalChanceReached += HandleMaxCriticalChanceReached;
-
     }
 
     private void OnDisable()
     {
         _playerAttacker.MaxCriticalChanceReached -= HandleMaxCriticalChanceReached;
-
     }
 
     public void UpdateUI(int damagePrice, int healthPrice, int armorPrice, int criticalChancePrice, int criticalDamagePrice, int goldMultiplierPrice)

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-
     [SerializeField] private Transform _fightCameraPosition;
     [SerializeField] private Transform _fightMobileCameraPosition;
     [SerializeField] private Vector3 _offset;
@@ -19,7 +18,7 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_player != null && _playerHealth.IsAlive && _isFightStarted==false && _isMovingCamera==false)
+        if (_player != null && _playerHealth.IsAlive && _isFightStarted == false && _isMovingCamera == false)
         {
             Vector3 targetPosition = _player.transform.position + _offset;
             transform.position = Vector3.Lerp(transform.position, targetPosition, _followSpeed * Time.deltaTime);
@@ -70,7 +69,7 @@ public class CameraFollow : MonoBehaviour
                 SmoothMoveCamera(targetPosition, targetRotation);
             }
         }
-        
+
     }
 
     private void SmoothMoveCamera(Vector3 targetPosition, Quaternion targetRotation)
