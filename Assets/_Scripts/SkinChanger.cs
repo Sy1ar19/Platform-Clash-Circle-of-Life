@@ -68,8 +68,12 @@ public class SkinChanger : MonoBehaviour
         if (!_info[_index].inStock)
         {
             int skinCost = _info[_index].cost;
-            BuySkin(_playerMoney, skinCost);
-            UpdateSkinStatus();
+
+            if (_playerMoney.Money >= skinCost)
+            {
+                BuySkin(_playerMoney, skinCost);
+                UpdateSkinStatus();
+            }
         }
         else if (_info[_index].inStock && !_info[_index].isChosen)
         {
