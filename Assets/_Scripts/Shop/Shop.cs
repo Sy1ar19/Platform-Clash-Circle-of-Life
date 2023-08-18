@@ -7,12 +7,12 @@ public class Shop : MonoBehaviour
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private PlayerAttacker _playerAttacker;
 
-    [SerializeField] private Upgrade _damageUpgrade;
-    [SerializeField] private Upgrade _healthUpgrade;
-    [SerializeField] private Upgrade _armorUpgrade;
-    [SerializeField] private Upgrade _criticalChanceUpgrade;
-    [SerializeField] private Upgrade _criticalDamageUpgrade;
-    [SerializeField] private Upgrade _goldMultiplierUpgrade;
+    [SerializeField] private UpgradeSO _damageUpgrade;
+    [SerializeField] private UpgradeSO _healthUpgrade;
+    [SerializeField] private UpgradeSO _armorUpgrade;
+    [SerializeField] private UpgradeSO _criticalChanceUpgrade;
+    [SerializeField] private UpgradeSO _criticalDamageUpgrade;
+    [SerializeField] private UpgradeSO _goldMultiplierUpgrade;
 
     private const string HealthKey = "PlayerHealth";
     private const string HealthPriceKey = "HealthPrice";
@@ -50,7 +50,7 @@ public class Shop : MonoBehaviour
         UpdateUI();
     }
 
-    public void BuyUpgrade(Upgrade selectedUpgrade)
+    public void BuyUpgrade(UpgradeSO selectedUpgrade)
     {
         if (_playerMoney.Money >= selectedUpgrade.Price)
         {

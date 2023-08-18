@@ -6,7 +6,7 @@ public class PlayerHealth : MonoBehaviour , IDamageable
 {
     [SerializeField] private int _health = 50;
     [SerializeField ] private int _armor;
-    [SerializeField] private Upgrade _healthUpgrade;
+    [SerializeField] private UpgradeSO _healthUpgrade;
 
     private const string HealthKey = "PlayerHealth";
     private const string ArmorKey = "PlayerArmor";

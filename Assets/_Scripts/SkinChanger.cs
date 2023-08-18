@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class SkinSwitcher : MonoBehaviour
+public class SkinChanger : MonoBehaviour
 {
     [SerializeField] private Skin[] _info;
     [SerializeField] private bool[] _stockCheck;
@@ -12,7 +12,7 @@ public class SkinSwitcher : MonoBehaviour
     [SerializeField] private Transform _skins;
     [SerializeField] private int _index;
 
-    [SerializeField] private SkinSwitcherUI _skinSwitcherUI;
+    [SerializeField] private SkinChangerUI _skinSwitcherUI;
 
     [SerializeField] private PlayerMoney _playerMoney;
 
@@ -65,26 +65,48 @@ public class SkinSwitcher : MonoBehaviour
 
     public void ActionButtonAction()
     {
-        _skinSwitcherUI.HandleActionButton(_info, _index, _playerMoney, _stockCheck);
-
-        _info[_index].inStock = true;
-        _stockCheck[_index] = true;
-
-        if (_info[_index].isChosen)
+        if (!_info[_index].inStock)
         {
-            _skinSwitcherUI.HandleSkinSelection(_info, _index, Save);
+            int skinCost = _info[_index].cost;
+            BuySkin(_playerMoney, skinCost);
+            UpdateSkinStatus();
+        }
+        else if (_info[_index].inStock && !_info[_index].isChosen)
+        {
+            SetSkinChosen(); 
             Save();
         }
+    }
 
-        bool[] modifiedStockCheck = new bool[_info.Length];
+    private void UpdateSkinStatus()
+    {
+        _info[_index].inStock = true;
+        _stockCheck[_index] = true;
+        PlayerPrefsX.SetBoolArray(BoughtSkinsKey, _stockCheck);
+        _skinSwitcherUI.UpdateUI(_info, _index);
+    }
 
+    private void SetSkinChosen()
+    {
         for (int i = 0; i < _info.Length; i++)
         {
-            modifiedStockCheck[i] = _info[i].inStock;
+            _info[i].isChosen = false;
         }
 
-        PlayerPrefsX.SetBoolArray(BoughtSkinsKey, modifiedStockCheck);
+        _info[_index].isChosen = true;
+        _skinSwitcherUI.HandleSkinSelection(_info, _index, Save);
+        _skinSwitcherUI.UpdateUI(_info, _index);
+    }
 
+    private void BuySkin(PlayerMoney playerMoney, int skinCost)
+    {
+        if (playerMoney.Money >= skinCost)
+        {
+            playerMoney.SpendMoney(skinCost);
+            _info[_index].inStock = true;
+            _stockCheck[_index] = true;
+            PlayerPrefsX.SetBoolArray(BoughtSkinsKey, _stockCheck);
+        }
     }
 
     private void LoadSkinData()

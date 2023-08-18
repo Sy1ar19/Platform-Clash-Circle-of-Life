@@ -146,7 +146,7 @@ public class PlayerAttacker : MonoBehaviour
 
     private bool CheckIfEnemyIsBoss(IDamageable enemy)
     {
-        if (enemy is Boss)
+        if (enemy is BossHealth)
             return true;
         return false;
     }

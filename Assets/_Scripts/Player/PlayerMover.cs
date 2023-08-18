@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMover : MonoBehaviour , IMovable
 {
     [SerializeField] private float _movementSpeed;
+
     private Rigidbody _rigidbody;
     private bool _canMove = true;
 

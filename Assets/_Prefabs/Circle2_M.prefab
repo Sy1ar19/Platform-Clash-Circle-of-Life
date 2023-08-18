@@ -232,4 +232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc87f7d4a7921324cbe943ef0b54e0f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 1000
+  _rotationSpeed: 100
+  _raycastDistance: 100
+  _fightTriggerMask:
+    serializedVersion: 2
+    m_Bits: 0

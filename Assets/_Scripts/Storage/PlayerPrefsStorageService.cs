@@ -13,7 +13,6 @@ public class PlayerPrefsStorageService : IStorageService
         {
             PlayerPrefs.SetFloat(key, floatValue);
         }
-        // Добавьте другие типы данных по мере необходимости
 
         PlayerPrefs.Save();
 
@@ -32,6 +31,5 @@ public class PlayerPrefsStorageService : IStorageService
             float loadedValue = PlayerPrefs.GetFloat(key, default);
             callback?.Invoke((T)(object)loadedValue);
         }
-        // Добавьте другие типы данных по мере необходимости
     }
 }

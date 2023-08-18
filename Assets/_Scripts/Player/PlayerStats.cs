@@ -25,12 +25,12 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private PlayerAttacker _playerCriticalDamage;
     [SerializeField] private PlayerMoney _playerGoldMultiplier;
 
-    [SerializeField] private Upgrade _damageUpgrade;
-    [SerializeField] private Upgrade _healthUpgrade;
-    [SerializeField] private Upgrade _armorUpgrade;
-    [SerializeField] private Upgrade _criticalChanceUpgrade;
-    [SerializeField] private Upgrade _criticalDamageUpgrade;
-    [SerializeField] private Upgrade _goldMultiplierUpgrade;
+    [SerializeField] private UpgradeSO _damageUpgrade;
+    [SerializeField] private UpgradeSO _healthUpgrade;
+    [SerializeField] private UpgradeSO _armorUpgrade;
+    [SerializeField] private UpgradeSO _criticalChanceUpgrade;
+    [SerializeField] private UpgradeSO _criticalDamageUpgrade;
+    [SerializeField] private UpgradeSO _goldMultiplierUpgrade;
 
     private int maxCriticalChance = 100;
 

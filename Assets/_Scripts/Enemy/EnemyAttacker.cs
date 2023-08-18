@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyAnimator), typeof(EnemyHealth))]
 public class EnemyAttacker : MonoBehaviour
 {
     [SerializeField] private float _attackDelay = 1.0f;

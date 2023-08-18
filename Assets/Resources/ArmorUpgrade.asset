@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 209ef3ce96256e246abb5b38451e9835, type: 3}
+  m_Script: {fileID: 11500000, guid: a955d1454e0456945a7a1037c4e27969, type: 3}
   m_Name: ArmorUpgrade
   m_EditorClassIdentifier: 
   _title: Armor
-  _price: 30
-  _increaseValue: 1
+  _price: 40
+  _increaseValue: 10

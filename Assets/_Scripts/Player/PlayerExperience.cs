@@ -25,9 +25,6 @@ public class PlayerExperience : MonoBehaviour
         _currentExperience = SaveLoadSystem.LoadData<int>(ExperienceKey, CurrentExperience);
         _maxExperience = SaveLoadSystem.LoadData<int>(MaxExperienceKey, MaxExperience);
         _level = SaveLoadSystem.LoadData<int>(LevelKey, Level);
-/*        _currentExperience = PlayerPrefs.GetInt(ExperienceKey, 0);
-        _maxExperience = PlayerPrefs.GetInt(MaxExperienceKey, _maxExperience);
-        _level = PlayerPrefs.GetInt(LevelKey, _level);*/
     }
 
     public void AddExperience(int experience)
@@ -50,8 +47,5 @@ public class PlayerExperience : MonoBehaviour
         SaveLoadSystem.SaveData<int>(ExperienceKey, _currentExperience);
         SaveLoadSystem.SaveData<int>(MaxExperienceKey, _maxExperience);
         SaveLoadSystem.SaveData<int>(LevelKey, _level);
-/*        PlayerPrefs.SetInt(ExperienceKey, _currentExperience);
-        PlayerPrefs.SetInt(MaxExperienceKey, _maxExperience);
-        PlayerPrefs.SetInt(LevelKey, _level);*/
     }
 }
