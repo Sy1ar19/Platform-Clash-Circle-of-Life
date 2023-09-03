@@ -8,6 +8,7 @@ public class PlayerExperience : MonoBehaviour
     private const string LevelKey = "PlayerLevel";
 
     [SerializeField] private int _maxExperience = 100;
+    [SerializeField] private LoadSaveDataSystem _loadSaveDataSystem;
 
     public event Action<int> ExperienceChanged;
 
@@ -38,14 +39,7 @@ public class PlayerExperience : MonoBehaviour
             _maxExperience *= 2;
         }
 
-        SaveExperience();
+        _loadSaveDataSystem.SaveExperience(_currentExperience, _maxExperience, _level);
         ExperienceChanged?.Invoke(_currentExperience);
-    }
-
-    private void SaveExperience()
-    {
-        SaveLoadSystem.SaveData<int>(ExperienceKey, _currentExperience);
-        SaveLoadSystem.SaveData<int>(MaxExperienceKey, _maxExperience);
-        SaveLoadSystem.SaveData<int>(LevelKey, _level);
     }
 }

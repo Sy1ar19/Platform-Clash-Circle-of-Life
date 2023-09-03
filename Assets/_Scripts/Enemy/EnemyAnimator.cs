@@ -1,14 +1,14 @@
 using UnityEngine;
 
-[RequireComponent (typeof(Animator))]
+[RequireComponent(typeof(Animator))]
 public class EnemyAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private PlayerHealth _player;
 
-    private string _attackParamName = "IsAttacking";
-    private string _winParamName = "Win";
-    private string _dieParamName = "IsDying";
+    public readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
+    public readonly int IsDying = Animator.StringToHash(nameof(IsDying));
+    public readonly int Win = Animator.StringToHash(nameof(Win));
 
     private void Awake()
     {
@@ -34,16 +34,16 @@ public class EnemyAnimator : MonoBehaviour
 
     public void PlayAttackAnimation(bool isAttacking)
     {
-        _animator.SetBool(_attackParamName, isAttacking);
+        _animator.SetBool(IsAttacking, isAttacking);
     }
 
     public void PlayWinAnimation()
     {
-        _animator.SetBool(_winParamName, true);
+        _animator.SetBool(Win, true);
     }
 
     public void PlayDieAnimation()
     {
-        _animator.SetBool(_dieParamName, true);
+        _animator.SetBool(IsDying, true);
     }
 }

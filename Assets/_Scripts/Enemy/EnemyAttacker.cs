@@ -11,11 +11,11 @@ public class EnemyAttacker : MonoBehaviour
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private CapsuleCollider _capsuleCollider;
 
-    [SerializeField] private IDamageable _enemy;
     [SerializeField] private EnemyDetector _enemyDetector;
 
     private bool _isAttacking = false;
     protected EnemyAnimator _enemyAnimator;
+    private IDamageable _enemy;
     private IDamageable _health;
     private Coroutine _attackCoroutine;
 

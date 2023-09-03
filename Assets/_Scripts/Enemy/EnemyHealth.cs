@@ -17,13 +17,17 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public int MoneyReward => _moneyReward;
     public int ExperienceReward => _experienceReward;
 
+    public event Action<int> HealthChanged;
+
     public bool IsAlive => _isAlive;
     public int CurrentHealth { get; private set; }
     public float ReceivedDamage { get; private set; }
+    public int MaxHealth { get; private set; }
 
     private void Awake()
     {
         CurrentHealth = _health;
+        MaxHealth = _health;
         _displayDamage = GetComponent<DisplayDamage>();
         _enemyAnimator = GetComponent<EnemyAnimator>();
         _enemyAttacker = GetComponent<EnemyAttacker>();
@@ -38,6 +42,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             return;
 
         CurrentHealth -= damage;
+
+        HealthChanged?.Invoke(CurrentHealth);
 
         if (CurrentHealth <= 0)
             Die();

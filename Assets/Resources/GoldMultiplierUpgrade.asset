@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GoldMultiplierUpgrade
   m_EditorClassIdentifier: 
   _title: GoldMultiplier
-  _price: 500
+  _price: 2000
   _increaseValue: 1

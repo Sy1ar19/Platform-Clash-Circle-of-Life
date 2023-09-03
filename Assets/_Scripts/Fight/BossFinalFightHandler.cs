@@ -29,7 +29,6 @@ public class BossFinalFightHandler : MonoBehaviour
     {
         _playerAnimator.PlayVictoryAnimation();
         StartCoroutine(ShowVictoryCanvasAfterDelay());
-
     }
 
     private IEnumerator ShowVictoryCanvasAfterDelay()
@@ -40,7 +39,6 @@ public class BossFinalFightHandler : MonoBehaviour
 
     private void OnFightStarted()
     {
-        _playerMover.TryGetComponent<Rigidbody>(out Rigidbody playerRigidbody);
         _playerMover.StopMove();
         _playerAnimator.PlayAttackAnimation(true);
     }

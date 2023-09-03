@@ -8,9 +8,12 @@ public class PlayerMoney : MonoBehaviour
 
     public event Action<int> MoneyChanged;
 
+    [SerializeField] private WorkShop _workShop;
+
     [SerializeField] private int _money = 0;
     private int _levelMoney;
     private int _goldMultiplier = 1;
+    private LoadSaveDataSystem loadSaveDataSystem = new LoadSaveDataSystem();
 
     public int LevelMoney => _levelMoney;
     public int Money => _money;
@@ -23,9 +26,19 @@ public class PlayerMoney : MonoBehaviour
         _levelMoney = 0;
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        _goldMultiplier = SaveLoadSystem.LoadData<int>(GoldMultiplierKey, GoldMultiplier);
+        _workShop.GoldMultiplierUpgraded += OnGoldMultiplierUpgraded;
+    }
+
+    private void OnDisable()
+    {
+        _workShop.GoldMultiplierUpgraded += OnGoldMultiplierUpgraded;
+    }
+
+    private void OnGoldMultiplierUpgraded(int newGoldMultiplier)
+    {
+        _goldMultiplier = newGoldMultiplier;
     }
 
     public void EarnMoney(int amount)
@@ -33,7 +46,7 @@ public class PlayerMoney : MonoBehaviour
         _money += amount * _goldMultiplier;
         _levelMoney += amount * _goldMultiplier;
         MoneyChanged?.Invoke(amount * _goldMultiplier);
-        SaveMoney();
+        loadSaveDataSystem.SaveMoney(_money, _goldMultiplier);
     }
 
     public bool SpendMoney(int amount)
@@ -42,15 +55,9 @@ public class PlayerMoney : MonoBehaviour
         {
             _money -= amount;
             MoneyChanged?.Invoke(-amount);
-            SaveMoney();
+            loadSaveDataSystem.SaveMoney(_money, _goldMultiplier);
             return true;
         }
         return false;
-    }
-
-    private void SaveMoney()
-    {
-        SaveLoadSystem.SaveData<int>(MoneyKey, _money);
-        SaveLoadSystem.SaveData<int>(GoldMultiplierKey, _goldMultiplier);
     }
 }

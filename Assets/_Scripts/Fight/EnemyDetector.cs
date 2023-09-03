@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EnemyDetector : MonoBehaviour
 {
+    [SerializeField] private EnemyHealthSlider _enemyHealthSlider;   
+
     public event System.Action<IDamageable> EnemyDetected;
     public event System.Action EnemyLost;
     private IDamageable _detectedEnemy;
@@ -16,6 +18,9 @@ public class EnemyDetector : MonoBehaviour
             {
                 _detectedEnemy = enemy;
                 EnemyDetected?.Invoke(enemy);
+
+                if (other.GetComponent<EnemyHealth>() && other.GetComponent<BossHealth>())
+                    _enemyHealthSlider.ActivateSlider(enemy);
             }
         }
     }
@@ -28,6 +33,8 @@ public class EnemyDetector : MonoBehaviour
         {
             _detectedEnemy = null;
             EnemyLost?.Invoke();
+            if (other.GetComponent<EnemyHealth>() && other.GetComponent<BossHealth>())
+                _enemyHealthSlider.DeactivateSlider();
         }
     }
 }

@@ -13,17 +13,17 @@ public class Circle : MonoBehaviour, IMovable
     private bool _canRotate = true;
     private Transform _selectedCircle;
 
+    private void Start()
+    {
+        SetRandomStartingRotation();
+    }
+
     private void Update()
     {
         if (_canRotate)
         {
             Move();
         }
-    }
-
-    private void Start()
-    {
-        SetRandomStartingRotation();
     }
 
     public void Move()
