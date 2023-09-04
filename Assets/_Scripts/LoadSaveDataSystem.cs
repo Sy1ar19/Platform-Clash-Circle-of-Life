@@ -9,6 +9,7 @@ public class LoadSaveDataSystem : MonoBehaviour
     private const string ExperienceKey = "PlayerExperience";
     private const string MaxExperienceKey = "PlayerMaxExperience";
     private const string LevelKey = "PlayerLevel";
+    private const string SelectedSkinKey = "SelectedSkin";
 
     public void LoadSkinData(int index, Skin[] info, bool[] stockCheck)
     {
@@ -57,5 +58,10 @@ public class LoadSaveDataSystem : MonoBehaviour
         SaveLoadSystem.SaveData<int>(ExperienceKey, currentExperience);
         SaveLoadSystem.SaveData<int>(MaxExperienceKey, maxExperience);
         SaveLoadSystem.SaveData<int>(LevelKey, level);
+    }
+
+    public void SaveSelectedSkin(int index)
+    {
+        PlayerPrefs.SetInt(SelectedSkinKey, index);
     }
 }

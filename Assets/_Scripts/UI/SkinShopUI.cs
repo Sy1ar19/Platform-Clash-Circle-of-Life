@@ -5,16 +5,14 @@ using TMPro;
 public class SkinShopUI : MonoBehaviour
 {
     [SerializeField] private Button _buyButton;
+    [SerializeField] private Button _selectButton;
+    [SerializeField] private Button _selectedButton;
     [SerializeField] private TextMeshProUGUI _priceText;
-    [SerializeField] private TextMeshProUGUI _coinsText;
-    [SerializeField] private Image _coinIcon;
 
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _buttonClickSound;
 
     private const string BoughtSkinsKey = "BoughtSkins";
-    private const string SelectedText = "Selected";
-    private const string SelectText = "Select";
     private const float ButtonClickCooldown = 0.1f;
 
     private float _lastButtonClickTime;
@@ -28,33 +26,34 @@ public class SkinShopUI : MonoBehaviour
     {
         if (info[index].inStock && info[index].isChosen)
         {
-            _priceText.text = SelectedText;
-            _buyButton.interactable = false;
-            _coinIcon.gameObject.SetActive(false);
+            _buyButton.gameObject.SetActive(false);
+            _selectButton.gameObject.SetActive(false);
+            _selectedButton.gameObject.SetActive(true);
         }
         else if (!info[index].inStock)
         {
             _priceText.text = info[index].cost.ToString();
-            _buyButton.interactable = true;
-            _coinIcon.gameObject.SetActive(true);
+            _buyButton.gameObject.SetActive(true);
+            _selectButton.gameObject.SetActive(false);
+            _selectedButton.gameObject.SetActive(false);
         }
         else if (info[index].inStock && !info[index].isChosen)
         {
-            _priceText.text = SelectText;
-            _buyButton.interactable = true;
-            _coinIcon.gameObject.SetActive(false);
+            _buyButton.gameObject.SetActive(false);
+            _selectButton.gameObject.SetActive(true);
+            _selectedButton.gameObject.SetActive(false);
         }
     }
 
     public void HandleActionButton(Skin[] info, int index, bool[] stockCheck)
     {
-        PlayButtonClickSound();
-
         if (info[index].inStock && !info[index].isChosen)
         {
             info[index].isChosen = true;
-            _priceText.text = SelectedText;
             PlayerPrefsX.SetBoolArray(BoughtSkinsKey, stockCheck);
+
+            _buyButton.gameObject.SetActive(false);
+            _selectButton.gameObject.SetActive(true);
         }
     }
 
@@ -69,12 +68,10 @@ public class SkinShopUI : MonoBehaviour
 
         info[selectedIndex].isChosen = true;
 
-        _buyButton.interactable = false;
-
         UpdateUI(info, selectedIndex);
     }
 
-    private void PlayButtonClickSound()
+    public void PlayButtonClickSound()
     {
         if (Time.time - _lastButtonClickTime >= ButtonClickCooldown)
         {

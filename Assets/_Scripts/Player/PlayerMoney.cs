@@ -11,9 +11,9 @@ public class PlayerMoney : MonoBehaviour
     [SerializeField] private WorkShop _workShop;
 
     [SerializeField] private int _money = 0;
+    [SerializeField] private LoadSaveDataSystem loadSaveDataSystem;
     private int _levelMoney;
     private int _goldMultiplier = 1;
-    private LoadSaveDataSystem loadSaveDataSystem = new LoadSaveDataSystem();
 
     public int LevelMoney => _levelMoney;
     public int Money => _money;
@@ -33,7 +33,7 @@ public class PlayerMoney : MonoBehaviour
 
     private void OnDisable()
     {
-        _workShop.GoldMultiplierUpgraded += OnGoldMultiplierUpgraded;
+        _workShop.GoldMultiplierUpgraded -= OnGoldMultiplierUpgraded;
     }
 
     private void OnGoldMultiplierUpgraded(int newGoldMultiplier)

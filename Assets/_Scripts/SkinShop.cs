@@ -2,23 +2,30 @@ using UnityEngine;
 
 public class SkinShop : MonoBehaviour
 {
+    private const string SelectedSkinKey = "SelectedSkin";
+
     [SerializeField] private Skin[] _info;
     [SerializeField] private bool[] _stockCheck;
 
     [SerializeField] private Transform _skins;
     [SerializeField] private int _index;
 
-    [SerializeField] private SkinShopUI _skinSwitcherUI;
-    private LoadSaveDataSystem loadSaveDataSystem = new LoadSaveDataSystem();
-
+    [SerializeField] private SkinShopUI _skinShopUI;
     [SerializeField] private PlayerMoney _playerMoney;
+
+    [SerializeField] private LoadSaveDataSystem _loadSaveDataSystem;
 
     private const string BoughtSkinsKey = "BoughtSkins";
 
 
     private void Awake()
     {
-        loadSaveDataSystem.LoadSkinData(_index, _info, _stockCheck);
+        _loadSaveDataSystem.LoadSkinData(_index, _info, _stockCheck);
+
+        if (PlayerPrefs.HasKey(SelectedSkinKey))
+        {
+            _index = PlayerPrefs.GetInt(SelectedSkinKey);
+        }
 
         for (int i = 0; i < _info.Length; i++)
         {
@@ -29,15 +36,15 @@ public class SkinShop : MonoBehaviour
         _info[_index].inStock = true;
         _skins.GetChild(_index).gameObject.SetActive(true);
 
-        _skinSwitcherUI.UpdateUI(_info, _index);
+        _skinShopUI.UpdateUI(_info, _index);
     }
-
+    
     public void ScrollRight()
     {
         _skins.GetChild(_index).gameObject.SetActive(false);
         _index = (_index + 1) % _skins.childCount;
         _skins.GetChild(_index).gameObject.SetActive(true);
-        _skinSwitcherUI.UpdateUI(_info, _index);
+        _skinShopUI.UpdateUI(_info, _index);
     }
 
     public void ScrollLeft()
@@ -45,7 +52,7 @@ public class SkinShop : MonoBehaviour
         _skins.GetChild(_index).gameObject.SetActive(false);
         _index = (_index - 1 + _skins.childCount) % _skins.childCount;
         _skins.GetChild(_index).gameObject.SetActive(true);
-        _skinSwitcherUI.UpdateUI(_info, _index);
+        _skinShopUI.UpdateUI(_info, _index);
     }
 
     public void ButtonAction()
@@ -63,7 +70,7 @@ public class SkinShop : MonoBehaviour
         else if (_info[_index].inStock && !_info[_index].isChosen)
         {
             SetSkinChosen();
-            loadSaveDataSystem.SaveSkin(_info, _index);
+            _loadSaveDataSystem.SaveSkin(_info, _index);
         }
     }
 
@@ -72,7 +79,7 @@ public class SkinShop : MonoBehaviour
         _info[_index].inStock = true;
         _stockCheck[_index] = true;
         PlayerPrefsX.SetBoolArray(BoughtSkinsKey, _stockCheck);
-        _skinSwitcherUI.UpdateUI(_info, _index);
+        _skinShopUI.UpdateUI(_info, _index);
     }
 
     private void SetSkinChosen()
@@ -83,8 +90,10 @@ public class SkinShop : MonoBehaviour
         }
 
         _info[_index].isChosen = true;
-        _skinSwitcherUI.HandleSkinSelection(_info, _index);
-        _skinSwitcherUI.UpdateUI(_info, _index);
+        _skinShopUI.HandleSkinSelection(_info, _index);
+        _skinShopUI.UpdateUI(_info, _index);
+
+        _loadSaveDataSystem.SaveSelectedSkin(_index);
     }
 
     private void BuySkin(PlayerMoney playerMoney, int skinCost)
@@ -92,6 +101,7 @@ public class SkinShop : MonoBehaviour
         if (playerMoney.Money >= skinCost)
         {
             playerMoney.SpendMoney(skinCost);
+            _skinShopUI.PlayButtonClickSound();
             _info[_index].inStock = true;
             _stockCheck[_index] = true;
             PlayerPrefsX.SetBoolArray(BoughtSkinsKey, _stockCheck);
