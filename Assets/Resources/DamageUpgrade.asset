@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DamageUpgrade
   m_EditorClassIdentifier: 
   _title: Damage
-  _price: 50
+  _price: 100
   _increaseValue: 10

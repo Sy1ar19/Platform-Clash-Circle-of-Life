@@ -39,8 +39,8 @@ public class PlayerAttacker : MonoBehaviour
 
     private void OnDisable()
     {
-        _enemyDetector.EnemyDetected += OnEnemyDetected;
-        _enemyDetector.EnemyLost += OnEnemyLost;
+        _enemyDetector.EnemyDetected -= OnEnemyDetected;
+        _enemyDetector.EnemyLost -= OnEnemyLost;
     }
 
     public bool IsPlayerAlive()

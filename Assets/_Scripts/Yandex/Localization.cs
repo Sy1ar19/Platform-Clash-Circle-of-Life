@@ -21,15 +21,13 @@ public class Localization : MonoBehaviour
 
     private void Start()
     {
-//#if UNITY_WEBGL && !UNITY_EDITOR
-        string currentLanguageCode = YandexGamesSdk.Environment.i18n.lang;
-        SwitchLanguageTo(currentLanguageCode);
-//#endif
+#if UNITY_WEBGL && !UNITY_EDITOR
+        SwitchLanguageTo(YandexGamesSdk.Environment.i18n.lang);
+#endif
     }
 
     public void SwitchLanguageTo(string code)
     {
-        Debug.Log("Switching language to: " + code);
         Image newCheckmark = null;
 
         switch (code)
@@ -54,6 +52,7 @@ public class Localization : MonoBehaviour
                 SetLanguageAndCheckmark(EnglishLanguage, newCheckmark);
                 break;
         }
+
 
         if (_activeCheckmark != null && _activeCheckmark != newCheckmark)
         {

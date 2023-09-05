@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Agava.YandexGames;
 
 public class AdvertisementButton : MonoBehaviour
 {
@@ -10,16 +11,16 @@ public class AdvertisementButton : MonoBehaviour
 
     public event Action<int> WatchedAd;
 
-    private bool _isCoinMultiplierUsed = false;
+    private bool _isAdvertismentWatched = false;
 
     private void Start()
     {
         _button.onClick.AddListener(WatchAd);
     }
 
-    private void WatchAd()
+    public void WatchAd()
     {
-        if (_isCoinMultiplierUsed == false)
+        if (_isAdvertismentWatched == false)
         {
             if (_playerMoney.LevelMoney > 0)
             {
@@ -27,7 +28,7 @@ public class AdvertisementButton : MonoBehaviour
 
                 _playerMoney.EarnMoney(_playerMoney.LevelMoney);
                 _button.interactable = false;
-                _isCoinMultiplierUsed = true;
+                _isAdvertismentWatched = true;
             }
         }
     }

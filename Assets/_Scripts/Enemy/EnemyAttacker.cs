@@ -86,5 +86,8 @@ public class EnemyAttacker : MonoBehaviour
         {
             StopCoroutine(_attackCoroutine);
         }
+
+        _enemyDetector.EnemyDetected -= OnEnemyDetected;
+        _enemyDetector.EnemyLost -= OnEnemyLost;
     }
 }

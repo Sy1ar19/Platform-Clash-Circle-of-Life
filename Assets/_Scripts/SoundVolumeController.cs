@@ -46,6 +46,21 @@ public class SoundVolumeController : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void Mute()
+    {
+        UpdateAudioSourceVolume(_musicAudioSource, 0f);
+        UpdateAudioSourceVolume(_effectsAudioSource, 0f);
+    }
+
+    public void Unmute()
+    {
+        float savedMusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, maxVolume);
+        float savedEffectsVolume = PlayerPrefs.GetFloat(EffectsVolumeKey, maxVolume);
+
+        SetMusicVolume(PlayerPrefs.GetFloat(MusicVolumeKey, maxVolume));
+        SetEffectsVolume(PlayerPrefs.GetFloat(EffectsVolumeKey, maxVolume));
+    }
+
     private void UpdateAudioSourceVolume(AudioSource audioSource, float volume)
     {
         if (audioSource != null)

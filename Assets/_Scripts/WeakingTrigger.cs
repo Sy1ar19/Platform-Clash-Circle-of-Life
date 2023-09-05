@@ -5,7 +5,7 @@ public class WeakingTrigger : MonoBehaviour
 {
     [SerializeField] private int _minDamage;
     [SerializeField] private int _maxDamage;
-    [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private TextMeshPro _text;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _damageSound;
 
