@@ -80,7 +80,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             Die();
     }
 
-    private void Die()
+    public void Die()
     {
         _isAlive = false;
         _playerMover.StopMove();

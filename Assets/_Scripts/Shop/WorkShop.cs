@@ -61,6 +61,7 @@ public class WorkShop : MonoBehaviour
 
     private void UpdateUI()
     {
+        Debug.Log(_playerMoney.GoldMultiplier);
         _shopUI.UpdateUI(_damagePrice, _healthPrice, _armorPrice, _criticalChancePrice, _criticalDamagePrice, _goldMultiplierPrice);
     }
 
@@ -77,8 +78,6 @@ public class WorkShop : MonoBehaviour
     {
         if (_playerMoney.Money >= selectedUpgrade.Price)
         {
-            Debug.Log(selectedUpgrade.Title);
-
             if (selectedUpgrade == _healthUpgrade && _playerMoney.Money >= _healthPrice)
             {
                 int newHealth = _playerHealth.Health + selectedUpgrade.IncreaseValue;
@@ -97,7 +96,7 @@ public class WorkShop : MonoBehaviour
                 UpdatePlayerParameter(newArmor, ref _armorPrice, ArmorKey, ArmorPriceKey, selectedUpgrade);
                 ArmorUpgraded?.Invoke();
             }
-            else if (selectedUpgrade == _criticalChanceUpgrade && _playerMoney.Money >= _criticalChancePrice && _weapon.CriticalChance 
+            else if (selectedUpgrade == _criticalChanceUpgrade && _playerMoney.Money >= _criticalChancePrice && _weapon.CriticalChance
                 < _weapon.GetMaxCriticalChance())
             {
                 int newCriticalChance = _weapon.CriticalChance + selectedUpgrade.IncreaseValue;
@@ -110,11 +109,13 @@ public class WorkShop : MonoBehaviour
                 UpdatePlayerParameter(newCriticalDamage, ref _criticalDamagePrice, CriticalDamageKey, CriticalDamagePriceKey, selectedUpgrade);
                 CriticalDamageUpgraded?.Invoke();
             }
-            else if (selectedUpgrade == _goldMultiplierUpgrade && _playerMoney.Money >= _goldMultiplierPrice)
+            else if (selectedUpgrade == _goldMultiplierUpgrade && _playerMoney.Money >= _goldMultiplierPrice && _playerMoney.GoldMultiplier
+                < _playerMoney.GetGoldMultiplier())
             {
                 int newGoldMultiplier = _playerMoney.GoldMultiplier + selectedUpgrade.IncreaseValue;
                 UpdatePlayerParameter(newGoldMultiplier, ref _goldMultiplierPrice, GoldMultiplierKey, GoldMultiplierPriceKey, selectedUpgrade);
                 GoldMultiplierUpgraded?.Invoke(newGoldMultiplier);
+                UpdateUI();
             }
         }
     }

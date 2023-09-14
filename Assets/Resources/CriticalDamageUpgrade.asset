@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CriticalDamageUpgrade
   m_EditorClassIdentifier: 
   _title: CriticalDamage
-  _price: 50
+  _price: 250
   _increaseValue: 10

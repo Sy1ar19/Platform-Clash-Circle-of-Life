@@ -5,6 +5,7 @@ public class DisplayDamage : MonoBehaviour
 {
     [SerializeField] private DamageNumber _popupPrefab;
     [SerializeField] private Transform _target;
+    [SerializeField] private Weapon _weapon;
 
     private const string CriticalHitText = "!";
 
@@ -13,7 +14,7 @@ public class DisplayDamage : MonoBehaviour
         DamageNumber newPopup = _popupPrefab.Spawn(_target.transform.position, number); 
         newPopup.SetFollowedTarget(_target.transform);
 
-        if (number > 10)
+        if (_weapon != null && _weapon.IsCriticalHit)
         {
             newPopup.SetScale(10f);
 

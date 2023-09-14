@@ -13,11 +13,16 @@ public class PlayerMoney : MonoBehaviour
     [SerializeField] private int _money = 0;
     [SerializeField] private LoadSaveDataSystem loadSaveDataSystem;
     private int _levelMoney;
-    private int _goldMultiplier = 1;
+    [SerializeField][Range(1, 2)] private int _goldMultiplier = 1;
 
     public int LevelMoney => _levelMoney;
     public int Money => _money;
     public int GoldMultiplier => _goldMultiplier;
+
+    public int GetGoldMultiplier()
+    {
+        return 2;
+    }
 
     private void Awake()
     {
@@ -39,6 +44,7 @@ public class PlayerMoney : MonoBehaviour
     private void OnGoldMultiplierUpgraded(int newGoldMultiplier)
     {
         _goldMultiplier = newGoldMultiplier;
+        SaveLoadSystem.SaveData<int>(GoldMultiplierKey, _goldMultiplier);
     }
 
     public void EarnMoney(int amount)
@@ -60,4 +66,6 @@ public class PlayerMoney : MonoBehaviour
         }
         return false;
     }
+
+
 }

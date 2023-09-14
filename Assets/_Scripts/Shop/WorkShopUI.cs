@@ -4,6 +4,12 @@ using UnityEngine.UI;
 
 public class WorkShopUI : MonoBehaviour
 {
+    private const float ButtonClickCooldown = 0.1f;
+    private const string MaxPrice = "MAX";
+    private const int ArmorUnlockLevel = 5;
+    private const int CriticalUnlockLevel = 10;
+    private const int GoldMultiplierUnlockLevel = 13;
+
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _buttonClickSound;
 
@@ -36,9 +42,6 @@ public class WorkShopUI : MonoBehaviour
     [SerializeField] private PlayerExperience _playerExperience;
     [SerializeField] private Weapon _weapon;
 
-    private const float ButtonClickCooldown = 0.1f;
-    private const string MaxPrice = "MAX";
-
     private float _lastButtonClickTime;
 
     private void OnEnable()
@@ -67,7 +70,7 @@ public class WorkShopUI : MonoBehaviour
         UpdateButtonSprite(_criticalDamagePriceButtonImage, criticalDamagePrice);
         UpdateButtonSprite(_goldMultiplierPriceButtonImage, goldMultiplierPrice);
 
-        if (_playerExperience.Level >= 5)
+        if (_playerExperience.Level >= ArmorUnlockLevel)
         {
             _armorAvailableButton.gameObject.SetActive(true);
             _armorUnavailableButton.gameObject.SetActive(false);
@@ -78,7 +81,7 @@ public class WorkShopUI : MonoBehaviour
             _armorUnavailableButton.gameObject.SetActive(true);
         }
 
-        if (_playerExperience.Level >= 10)
+        if (_playerExperience.Level >= CriticalUnlockLevel)
         {
             _criticalChanceAvailableButton.gameObject.SetActive(true);
             _criticalChanceUnavailableButton.gameObject.SetActive(false);
@@ -93,7 +96,7 @@ public class WorkShopUI : MonoBehaviour
             _criticalDamageUnavailableButton.gameObject.SetActive(true);
         }
 
-        if (_playerExperience.Level >= 15)
+        if (_playerExperience.Level >= GoldMultiplierUnlockLevel)
         {
             _goldMultiplierAvailableButton.gameObject.SetActive(true);
             _goldMultiplierUnavailableButton.gameObject.SetActive(false);
@@ -111,6 +114,16 @@ public class WorkShopUI : MonoBehaviour
         else
         {
             _criticalChancePriceText.text = criticalChancePrice.ToString();
+        }
+
+        if(_playerMoney.GoldMultiplier >= _playerMoney.GetGoldMultiplier())
+        {
+            _goldMultiplierPriceText.text = MaxPrice;
+            _goldMultiplierAvailableButton.enabled = false;
+        }
+        else
+        {
+            _goldMultiplierPriceText.text = goldMultiplierPrice.ToString();
         }
     }
 
@@ -133,8 +146,6 @@ public class WorkShopUI : MonoBehaviour
     {
         if (Time.time - _lastButtonClickTime >= ButtonClickCooldown)
         {
-            //_audioSource.PlayOneShot(_buttonClickSound);
-            //_audioSource.PlayOneShot();
             _audioSource.Play();
             _lastButtonClickTime = Time.time;
         }

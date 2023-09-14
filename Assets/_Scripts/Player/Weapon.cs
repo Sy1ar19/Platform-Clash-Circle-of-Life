@@ -23,11 +23,14 @@ public class Weapon : MonoBehaviour
     [SerializeField] private WorkShop _workShop;
 
     public event Action MaxCriticalChanceReached;
+    public event Action<bool, int> CriticalHit;
 
     private Coroutine _attackCoroutine;
     private bool _isAttacking = false;
+    private bool _isCriticalhit = false;
 
     public bool IsAttacking => _isAttacking;
+    public bool IsCriticalHit => _isCriticalhit;
 
     public int Damage => _damage;
     public int CriticalChance => _criticalChance;
@@ -61,8 +64,6 @@ public class Weapon : MonoBehaviour
 
     public void Shoot(IDamageable enemy)
     {
-        
-
         if (_isAttacking == false && enemy != null)
         {
             _attackCoroutine = StartCoroutine(AttackWithDelay(enemy, _damage, _attackDelay));
@@ -82,14 +83,19 @@ public class Weapon : MonoBehaviour
         {
 
             int damageToDeal = damage;
-
             if (CheckForCriticalHit(_criticalChance))
             {
                 damageToDeal += _criticalDamage;
+                _isCriticalhit = true;
+
+                CriticalHit?.Invoke(true, damageToDeal);
             }
 
             enemy.ApplyDamage(damageToDeal);
+
             EffectUtils.PerformEffect(_muzzleEffect, _audioSource, _audioClip);
+
+            _isCriticalhit = false;
 
             if (_playerAttacker.CheckIfEnemyIsBoss(enemy))
             {

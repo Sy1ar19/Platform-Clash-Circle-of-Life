@@ -38,7 +38,6 @@ public class StageProgressUI : MonoBehaviour
                 body.material = lockedMaterial;
                 head.material = lockedMaterial;
             }
-
         }
     }
 }

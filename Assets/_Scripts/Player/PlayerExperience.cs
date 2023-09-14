@@ -7,13 +7,13 @@ public class PlayerExperience : MonoBehaviour
     private const string MaxExperienceKey = "PlayerMaxExperience";
     private const string LevelKey = "PlayerLevel";
 
-    [SerializeField] private int _maxExperience = 100;
+    [SerializeField] private int _maxExperience = 40;
     [SerializeField] private LoadSaveDataSystem _loadSaveDataSystem;
 
     public event Action<int> ExperienceChanged;
 
     private int _totalCount;
-    private int _currentExperience = 0;
+    [SerializeField]private int _currentExperience = 0;
     private int _level = 1;
 
     public int Experience => _totalCount;

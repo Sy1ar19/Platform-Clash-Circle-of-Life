@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ArmorUpgrade
   m_EditorClassIdentifier: 
   _title: Armor
-  _price: 40
-  _increaseValue: 10
+  _price: 400
+  _increaseValue: 5

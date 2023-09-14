@@ -9,6 +9,7 @@ public class StageProgress : MonoBehaviour
 
     [SerializeField] private BossHealth bossHealth;
     [SerializeField] private StageProgressUI stageProgressUI;
+    [SerializeField] private int _level;
 
     private int _completedLevels = 0;
     private int _currentLevel = 0;
@@ -18,6 +19,7 @@ public class StageProgress : MonoBehaviour
     {
         _currentLevel = SaveLoadSystem.LoadData(CurrentLevelKey, 0);
         _levelCompleted = SaveLoadSystem.LoadData(IsLevelCompleated, _levelCompleted);
+        _completedLevels = SaveLoadSystem.LoadData(CompletedLevelsKey, _completedLevels);
     }
 
     private void OnEnable()
@@ -32,15 +34,13 @@ public class StageProgress : MonoBehaviour
 
     private void OnBossDied()
     {
-        if (_levelCompleted == 0)
+        if (SaveLoadSystem.LoadData(CompletedLevelPrefix + _level, 0) == 0)
         {
-            _completedLevels++;
-            SaveLoadSystem.SaveData(CompletedLevelPrefix + _currentLevel, 1);
-            SaveLoadSystem.SaveData(CurrentLevelKey, _currentLevel);
-            SaveLoadSystem.SaveData(CompletedLevelsKey, _completedLevels);
+            Debug.Log(SaveLoadSystem.LoadData(CompletedLevelPrefix + _level, 0));
 
-            _levelCompleted = 1;
-            SaveLoadSystem.SaveData(IsLevelCompleated, _levelCompleted);
+            _completedLevels++;
+            SaveLoadSystem.SaveData(CompletedLevelPrefix + _level, _completedLevels);
+            SaveLoadSystem.SaveData(CompletedLevelsKey, _completedLevels);
         }
     }
 }

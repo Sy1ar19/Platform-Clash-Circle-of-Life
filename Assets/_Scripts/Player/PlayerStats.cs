@@ -35,6 +35,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private UpgradeSO _goldMultiplierUpgrade;
 
     private int maxCriticalChance = 100;
+    private int maxGoldMultiplier = 2;
 
     private void Awake()
     {
@@ -59,8 +60,21 @@ public class PlayerStats : MonoBehaviour
             _nextCriticalChanceText.text = nextCriticalChance.ToString();
         }
 
+
+
         _nextCriticalDamageText.text = (_weapon.CriticalDamage + _criticalDamageUpgrade.IncreaseValue).ToString();
-        _nextGoldMultiplierText.text = (_playerGoldMultiplier.GoldMultiplier + _goldMultiplierUpgrade.IncreaseValue).ToString();
+
+        int nextGoldMultiplierChance = _playerGoldMultiplier.GoldMultiplier + _goldMultiplierUpgrade.IncreaseValue;
+
+        if (nextGoldMultiplierChance >= maxGoldMultiplier + 1)
+        {
+            _nextGoldMultiplierText.text = MaxValue;
+        }
+        else
+        {
+            _nextGoldMultiplierText.text = nextGoldMultiplierChance.ToString();
+        }
+        //_nextGoldMultiplierText.text = (_playerGoldMultiplier.GoldMultiplier + _goldMultiplierUpgrade.IncreaseValue).ToString();
     }
 
     private void OnEnable()
@@ -126,8 +140,20 @@ public class PlayerStats : MonoBehaviour
 
     private void OnGoldMultiplierUpgraded(int newGoldMultiplier)
     {
-        _goldMultiplierText.text = newGoldMultiplier.ToString();
-        _nextGoldMultiplierText.text = (_playerGoldMultiplier.GoldMultiplier + _goldMultiplierUpgrade.IncreaseValue).ToString();
+        _goldMultiplierText.text = _playerGoldMultiplier.GoldMultiplier.ToString();
+
+        int nextGoldMultiplierChance = _playerGoldMultiplier.GoldMultiplier + _goldMultiplierUpgrade.IncreaseValue;
+
+        if (nextGoldMultiplierChance >= maxGoldMultiplier + 1)
+        {
+            _nextGoldMultiplierText.text = MaxValue;
+        }
+        else
+        {
+            _nextGoldMultiplierText.text = newGoldMultiplier.ToString();
+        }
+
+        //_nextGoldMultiplierText.text = (_playerGoldMultiplier.GoldMultiplier + _goldMultiplierUpgrade.IncreaseValue).ToString();
     }
 
     private void OnMaxCriticalChanceReached()

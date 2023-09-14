@@ -26,7 +26,15 @@ public class AdvertisementButton : MonoBehaviour
             {
                 int additionalCoins = _playerMoney.LevelMoney;
 
-                _playerMoney.EarnMoney(_playerMoney.LevelMoney);
+                if(_playerMoney.GoldMultiplier > 1)
+                {
+                    _playerMoney.EarnMoney(_playerMoney.LevelMoney/2);
+                }
+                else
+                {
+                    _playerMoney.EarnMoney(_playerMoney.LevelMoney);
+                }
+
                 _button.interactable = false;
                 _isAdvertismentWatched = true;
             }
