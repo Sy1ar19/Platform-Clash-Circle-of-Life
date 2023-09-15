@@ -61,7 +61,6 @@ public class WorkShop : MonoBehaviour
 
     private void UpdateUI()
     {
-        Debug.Log(_playerMoney.GoldMultiplier);
         _shopUI.UpdateUI(_damagePrice, _healthPrice, _armorPrice, _criticalChancePrice, _criticalDamagePrice, _goldMultiplierPrice);
     }
 

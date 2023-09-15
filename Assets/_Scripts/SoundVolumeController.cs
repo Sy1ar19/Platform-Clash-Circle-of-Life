@@ -30,6 +30,30 @@ public class SoundVolumeController : MonoBehaviour
         _effectsSlider.onValueChanged.AddListener(SetEffectsVolume);
     }
 
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            Mute();
+        }
+        else
+        {
+            Unmute();
+        }
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            Unmute();
+        }
+        else
+        {
+            Mute();
+        }
+    }
+
     public void SetMusicVolume(float volume)
     {
         volume = Mathf.Clamp(volume, 0, 1);

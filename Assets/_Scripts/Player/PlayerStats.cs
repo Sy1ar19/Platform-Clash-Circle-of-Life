@@ -60,8 +60,6 @@ public class PlayerStats : MonoBehaviour
             _nextCriticalChanceText.text = nextCriticalChance.ToString();
         }
 
-
-
         _nextCriticalDamageText.text = (_weapon.CriticalDamage + _criticalDamageUpgrade.IncreaseValue).ToString();
 
         int nextGoldMultiplierChance = _playerGoldMultiplier.GoldMultiplier + _goldMultiplierUpgrade.IncreaseValue;
@@ -74,7 +72,6 @@ public class PlayerStats : MonoBehaviour
         {
             _nextGoldMultiplierText.text = nextGoldMultiplierChance.ToString();
         }
-        //_nextGoldMultiplierText.text = (_playerGoldMultiplier.GoldMultiplier + _goldMultiplierUpgrade.IncreaseValue).ToString();
     }
 
     private void OnEnable()
@@ -152,8 +149,6 @@ public class PlayerStats : MonoBehaviour
         {
             _nextGoldMultiplierText.text = newGoldMultiplier.ToString();
         }
-
-        //_nextGoldMultiplierText.text = (_playerGoldMultiplier.GoldMultiplier + _goldMultiplierUpgrade.IncreaseValue).ToString();
     }
 
     private void OnMaxCriticalChanceReached()
