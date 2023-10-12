@@ -14,6 +14,8 @@ public class SoundVolumeController : MonoBehaviour
     [SerializeField] private Slider _effectsSlider;
 
     private float maxVolume = 1f;
+    private bool _isAdPlaying = false;
+
 
     private void Start()
     {
@@ -30,23 +32,14 @@ public class SoundVolumeController : MonoBehaviour
         _effectsSlider.onValueChanged.AddListener(SetEffectsVolume);
     }
 
-    private void OnApplicationPause(bool pause)
-    {
-        if (pause)
-        {
-            Mute();
-        }
-        else
-        {
-            Unmute();
-        }
-    }
-
     private void OnApplicationFocus(bool focus)
     {
         if (focus)
         {
-            Unmute();
+            if (!_isAdPlaying)
+            {
+                Unmute();
+            }
         }
         else
         {
@@ -83,6 +76,11 @@ public class SoundVolumeController : MonoBehaviour
 
         SetMusicVolume(PlayerPrefs.GetFloat(MusicVolumeKey, maxVolume));
         SetEffectsVolume(PlayerPrefs.GetFloat(EffectsVolumeKey, maxVolume));
+    }
+
+    public void SetAdIsPlaying(bool isPlaying)
+    {
+        _isAdPlaying = isPlaying;
     }
 
     private void UpdateAudioSourceVolume(AudioSource audioSource, float volume)

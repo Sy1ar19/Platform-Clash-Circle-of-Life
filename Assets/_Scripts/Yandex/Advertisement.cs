@@ -15,13 +15,13 @@ public class Advertisement : MonoBehaviour
 
     private void Start()
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
+/*#if UNITY_WEBGL && !UNITY_EDITOR
         if (!_hasAdPlayedInStart)
         {
             PlayAd();
             _hasAdPlayedInStart = true;
         }
-#endif
+#endif*/
     }
 
     public void OnShowVideoButtonClick()
@@ -33,17 +33,20 @@ public class Advertisement : MonoBehaviour
 
     private void OnRewarded()
     {
+        _soundVolumeController.Mute();
         _advertisementButton.WatchAd();
     }
 
     private void OnClosed()
     {
+        _soundVolumeController.SetAdIsPlaying(false);
         _soundVolumeController.Unmute();
         _adIsPlaying = false;
     }
 
     private void OnPlayed()
     {
+        _soundVolumeController.SetAdIsPlaying(true);
         _soundVolumeController.Mute();
         _adIsPlaying = true;
     }
@@ -61,7 +64,7 @@ public class Advertisement : MonoBehaviour
         }
     }
 
-    private void PlayAd()   //��������
+    private void PlayAd()
     {
         ShowInterstitialAd();
     }

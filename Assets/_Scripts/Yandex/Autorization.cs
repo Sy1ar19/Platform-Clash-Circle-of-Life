@@ -4,18 +4,21 @@ using UnityEngine;
 public class Autorization : MonoBehaviour
 {
     [SerializeField] private GameObject _panel;
+    [SerializeField] private CanvasGroup _rankCanvas;
+    [SerializeField] private GameObject _agreementPanel;
+    [SerializeField] private CanvasGroup _canvasGroup;
 
     public void Authorize()
     {
         if (PlayerAccount.IsAuthorized == false)
         {
-            PlayerAccount.Authorize(RequestPersonalProfileDataPermission);
+            PlayerAccount.Authorize();
         }
         else
         {
+            RequestPersonalProfileDataPermission();
             OpenPanel();
         }
-
     }
 
     private void RequestPersonalProfileDataPermission()
@@ -25,6 +28,22 @@ public class Autorization : MonoBehaviour
 
     private void OpenPanel()
     {
-        _panel.SetActive(true);
+       /* _panel.SetActive(true);*/
+        _rankCanvas.alpha = 1;
+        _rankCanvas.blocksRaycasts = true;
+        _rankCanvas.interactable = true;
+    }
+
+    public void CheckAutorization()
+    {
+        if (PlayerAccount.IsAuthorized == false) 
+        {
+            _agreementPanel.SetActive(true);
+            _canvasGroup.interactable = false;
+        }
+        else
+        {
+            OpenPanel();
+        }
     }
 }
