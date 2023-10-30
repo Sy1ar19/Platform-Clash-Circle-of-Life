@@ -12,12 +12,10 @@ public class StageProgress : MonoBehaviour
     [SerializeField] private int _level;
 
     private int _completedLevels = 0;
-    private int _currentLevel = 0;
     private int _levelCompleted = 0;
 
     private void Start()
     {
-        _currentLevel = SaveLoadSystem.LoadData(CurrentLevelKey, 0);
         _levelCompleted = SaveLoadSystem.LoadData(IsLevelCompleated, _levelCompleted);
         _completedLevels = SaveLoadSystem.LoadData(CompletedLevelsKey, _completedLevels);
     }

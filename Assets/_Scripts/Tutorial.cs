@@ -7,9 +7,6 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private TimeHandler _timeHandler;
     [SerializeField] GameObject[] tutorialPanels;
 
-    private static bool _hasRun = false;
-
-
     private void Start()
     {
         if (PlayerPrefs.HasKey(TutorialCompletedKey) == false)

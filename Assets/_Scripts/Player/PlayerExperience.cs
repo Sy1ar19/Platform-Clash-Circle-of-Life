@@ -9,12 +9,13 @@ public class PlayerExperience : MonoBehaviour
 
     [SerializeField] private int _maxExperience = 40;
     [SerializeField] private LoadSaveDataSystem _loadSaveDataSystem;
+    [SerializeField]private int _currentExperience = 0;
+
+    private readonly int _multiplier = 2;
+    private int _totalCount;
+    private int _level = 1;
 
     public event Action<int> ExperienceChanged;
-
-    private int _totalCount;
-    [SerializeField]private int _currentExperience = 0;
-    private int _level = 1;
 
     public int Experience => _totalCount;
     public int CurrentExperience => _currentExperience;
@@ -36,7 +37,7 @@ public class PlayerExperience : MonoBehaviour
         {
             _currentExperience -= _maxExperience;
             _level++;
-            _maxExperience *= 2;
+            _maxExperience *= _multiplier;
         }
 
         _loadSaveDataSystem.SaveExperience(_currentExperience, _maxExperience, _level);

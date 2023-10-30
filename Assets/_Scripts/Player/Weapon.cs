@@ -17,7 +17,6 @@ public class Weapon : MonoBehaviour
     [SerializeField] private ParticleSystem _muzzleEffect;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _audioClip;
-
     [SerializeField] private PlayerAnimator _playerAnimator;
     [SerializeField] private PlayerAttacker _playerAttacker;
     [SerializeField] private WorkShop _workShop;
@@ -31,7 +30,6 @@ public class Weapon : MonoBehaviour
 
     public bool IsAttacking => _isAttacking;
     public bool IsCriticalHit => _isCriticalhit;
-
     public int Damage => _damage;
     public int CriticalChance => _criticalChance;
     public int CriticalDamage => _criticalDamage;
@@ -113,7 +111,6 @@ public class Weapon : MonoBehaviour
         _playerAnimator.PlayAttackAnimation(false);
         _isAttacking = false;
     }
-
 
     private void OnDamageUpdated()
     {

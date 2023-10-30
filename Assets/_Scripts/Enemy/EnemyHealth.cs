@@ -14,11 +14,11 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     protected EnemyAnimator _enemyAnimator;
     protected EnemyAttacker _enemyAttacker;
     protected bool _isAlive = true;
-    public int MoneyReward => _moneyReward;
-    public int ExperienceReward => _experienceReward;
-
+    
     public event Action<int> HealthChanged;
 
+    public int MoneyReward => _moneyReward;
+    public int ExperienceReward => _experienceReward;
     public bool IsAlive => _isAlive;
     public int CurrentHealth { get; private set; }
     public float ReceivedDamage { get; private set; }

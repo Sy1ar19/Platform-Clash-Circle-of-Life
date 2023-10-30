@@ -69,7 +69,6 @@ public class CameraFollow : MonoBehaviour
                 SmoothMoveCamera(targetPosition, targetRotation);
             }
         }
-
     }
 
     private void SmoothMoveCamera(Vector3 targetPosition, Quaternion targetRotation)

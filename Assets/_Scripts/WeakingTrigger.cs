@@ -3,6 +3,8 @@ using TMPro;
 
 public class WeakingTrigger : MonoBehaviour
 {
+    private const string dashMark = "-";
+
     [SerializeField] private int _minDamage;
     [SerializeField] private int _maxDamage;
     [SerializeField] private TextMeshPro _text;
@@ -14,7 +16,7 @@ public class WeakingTrigger : MonoBehaviour
     private void Start()
     {
         _damage = Random.Range(_minDamage, _maxDamage);
-        _text.text = "-" + _damage.ToString();
+        _text.text = dashMark + _damage.ToString();
     }
 
     private void OnTriggerEnter(Collider other)

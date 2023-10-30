@@ -10,7 +10,6 @@ public class EnemyAttacker : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private CapsuleCollider _capsuleCollider;
-
     [SerializeField] private EnemyDetector _enemyDetector;
 
     private bool _isAttacking = false;
@@ -62,7 +61,7 @@ public class EnemyAttacker : MonoBehaviour
             _isAttacking = true;
             _enemyAnimator.PlayAttackAnimation(_isAttacking);
 
-            target.ApplyDamage(damage + UnityEngine.Random.Range(-1, 1));
+            target.ApplyDamage(damage + Random.Range(-1, 1));
             EffectUtils.PerformEffect(_muzzleEffect, _audioSource, _audioClip);
 
             yield return new WaitForSeconds(delay);

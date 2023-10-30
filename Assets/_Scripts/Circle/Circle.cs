@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Circle : MonoBehaviour, IMovable
 {
+    private const string XAxis = "Mouse X";
+
     [SerializeField] private float _rotationSpeed = 1000f;
     [SerializeField] private float _raycastDistance = 100f;
     [SerializeField] private LayerMask _fightTriggerMask;
@@ -12,8 +14,6 @@ public class Circle : MonoBehaviour, IMovable
     private bool _isRotating = false;
     private bool _canRotate = true;
     private Transform _selectedCircle;
-    private Vector2 _startTouchPosition;
-    private Quaternion _startRotation;
 
     private void Start()
     {
@@ -52,45 +52,10 @@ public class Circle : MonoBehaviour, IMovable
 
         if (_isRotating)
         {
-            float mouseX = Input.GetAxis("Mouse X");
+            float mouseX = Input.GetAxis(XAxis);
             _selectedCircle.transform.Rotate(Vector3.up, mouseX * _rotationSpeed * Time.deltaTime);
         }
     }
-
-    /*    public void Move()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit, _raycastDistance, _fightTriggerMask))
-                {
-                    if (hit.collider.TryGetComponent<DeahtTrigger>(out DeahtTrigger deahtTrigger))
-                    {
-                        _selectedCircle = deahtTrigger.transform.parent;
-                        _isRotating = true;
-                        _startTouchPosition = Input.mousePosition;
-                        _startRotation = _selectedCircle.rotation; // Сохраняем текущее вращение
-                    }
-                }
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                _isRotating = false;
-            }
-
-            if (_isRotating)
-            {
-                Vector2 currentTouchPosition = Input.mousePosition;
-                Vector2 deltaPosition = currentTouchPosition - _startTouchPosition;
-                float angle = Mathf.Atan2(deltaPosition.y, deltaPosition.x) * Mathf.Rad2Deg;
-
-                // Применяем угол к текущему вращению, используя сохраненное начальное вращение
-                _selectedCircle.rotation = _startRotation * Quaternion.Euler(0f, -angle, 0f);
-            }
-        }*/
 
     private void SetRandomStartingRotation()
     {

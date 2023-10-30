@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class SoundVolumeController : MonoBehaviour
@@ -13,7 +12,7 @@ public class SoundVolumeController : MonoBehaviour
     [SerializeField] private Slider _musicSlider;
     [SerializeField] private Slider _effectsSlider;
 
-    private float maxVolume = 1f;
+    private readonly float maxVolume = 1f;
     private bool _isAdPlaying = false;
 
 

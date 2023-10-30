@@ -8,13 +8,15 @@ public class LeaderboardLoader : MonoBehaviour
     private const string ENAnonymous = "Anonymous";
     private const string RUAnonymous = "Аноним";
     private const string TRAnonymous = "Anonim";
+    private const string Russian = "Russian";
+    private const string English = "English";
+    private const string Turkish = "Turkish";
 
     [SerializeField] private Record[] _records;
     [SerializeField] private PlayerRecord _playerRecord;
     [SerializeField] private LeanLocalization _localization;
 
-    private string _leaderboardName = "money";
-    private int _playerScore = 0;
+    private readonly string _leaderboardName = "money";
 
     public string LeaderboardName => _leaderboardName;
 
@@ -49,15 +51,15 @@ public class LeaderboardLoader : MonoBehaviour
 
                 if (string.IsNullOrEmpty(name))
                 {
-                    if (_localization.CurrentLanguage == "Russian")
+                    if (_localization.CurrentLanguage == Russian)
                     {
                         name = RUAnonymous;
                     }
-                    else if (_localization.CurrentLanguage == "English")
+                    else if (_localization.CurrentLanguage == English)
                     {
                         name = ENAnonymous;
                     }
-                    else if (_localization.CurrentLanguage == "Turkish")
+                    else if (_localization.CurrentLanguage == Turkish)
                     {
                         name = TRAnonymous;
                     }
@@ -86,17 +88,17 @@ public class LeaderboardLoader : MonoBehaviour
         {
             _playerRecord.gameObject.SetActive(true);
 
-            if(result.player.publicName == null) 
+            if (result.player.publicName == null)
             {
-                if(_localization.CurrentLanguage == "Russian") 
+                if (_localization.CurrentLanguage == Russian)
                 {
                     _playerRecord.SetName(RUAnonymous);
                 }
-                else if(_localization.CurrentLanguage == "English")
+                else if (_localization.CurrentLanguage == English)
                 {
                     _playerRecord.SetName(ENAnonymous);
                 }
-                else if(_localization.CurrentLanguage == "Turkish")
+                else if (_localization.CurrentLanguage == Turkish)
                 {
                     _playerRecord.SetName(TRAnonymous);
                 }

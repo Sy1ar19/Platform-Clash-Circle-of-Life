@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Agava.YandexGames;
 
 public class AdvertisementButton : MonoBehaviour
 {

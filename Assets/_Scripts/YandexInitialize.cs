@@ -15,11 +15,6 @@ public class YandexInitialize : MonoBehaviour
 
 
 #if UNITY_WEBGL 
-/*    private void Awake()
-    {
-        YandexGamesSdk.CallbackLogging = true;
-    }*/
-
     private IEnumerator Start()
     {
         yield return YandexGamesSdk.Initialize(OnInitialize);

@@ -7,21 +7,19 @@ public class PlayerMoney : MonoBehaviour
     private const string GoldMultiplierKey = "PlayerGoldMultiplier";
     private const string TotalMoneyKey = "PlayerTotalMoney";
 
-    public event Action<int> MoneyChanged;
-
     [SerializeField] private WorkShop _workShop;
-
     [SerializeField] private int _money = 0;
     [SerializeField] private LoadSaveDataSystem _loadSaveDataSystem;
-    private int _levelMoney;
     [SerializeField][Range(1, 2)] private int _goldMultiplier = 1;
 
+    public event Action<int> MoneyChanged;
+
+    private int _levelMoney;
     private int _totalMoney = 0;
 
     public int LevelMoney => _levelMoney;
     public int Money => _money;
     public int GoldMultiplier => _goldMultiplier;
-
     public int TotalMoney => _totalMoney;
 
     public int GetGoldMultiplier()

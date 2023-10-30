@@ -6,7 +6,6 @@ public class DeahtTrigger : MonoBehaviour
     {
         if (other.TryGetComponent<PlayerHealth>(out PlayerHealth player))
         {
-            //player.ApplyDamage(player.CurrentHealth);
             player.Die();
         }
     }

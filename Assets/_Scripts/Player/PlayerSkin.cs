@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerSkin : MonoBehaviour
 {
+    private const string ChosenSkinKey = "ChosenSkin";
+
     [SerializeField] private Skin[] _skins;
     [SerializeField] private Transform _playerVisual;
-
-    private const string ChosenSkinKey = "ChosenSkin";
 
     private int _chosenSkinIndex;
 

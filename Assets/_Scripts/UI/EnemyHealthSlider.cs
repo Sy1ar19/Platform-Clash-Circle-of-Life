@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class EnemyHealthSlider : MonoBehaviour
 {
     [SerializeField] private Slider _healthSlider;
-    //[SerializeField] private EnemyDetector _enemyDetector;
     [SerializeField] private TMP_Text _healthText;
 
     private IDamageable _enemy;
@@ -15,17 +14,8 @@ public class EnemyHealthSlider : MonoBehaviour
         _healthSlider.gameObject.SetActive(false);
     }
 
-    private void OnEnable()
-    {
-        //_enemyDetector.EnemyDetected += OnEnemyDetected;
-        //_enemyDetector.EnemyLost += OnEnemyLost;
-    }
-
     private void OnDisable()
     {
-        //_enemyDetector.EnemyDetected -= OnEnemyDetected;
-        //_enemyDetector.EnemyLost -= OnEnemyLost;
-
         if (_enemy != null)
         {
             _enemy.HealthChanged -= OnHealthChanged;
@@ -57,15 +47,4 @@ public class EnemyHealthSlider : MonoBehaviour
     {
         _healthSlider.gameObject.SetActive(false);
     }
-
-/*    private void OnEnemyLost()
-    {
-        DeactivateSlider();
-    }
-
-    private void OnEnemyDetected(IDamageable enemy)
-    {
-        ActivateSlider(enemy);
-        UpdateHealth(enemy.CurrentHealth); 
-    }*/
 }

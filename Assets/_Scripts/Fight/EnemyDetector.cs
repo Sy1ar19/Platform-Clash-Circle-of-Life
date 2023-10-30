@@ -6,6 +6,7 @@ public class EnemyDetector : MonoBehaviour
 
     public event System.Action<IDamageable> EnemyDetected;
     public event System.Action EnemyLost;
+
     private IDamageable _detectedEnemy;
 
     private void OnTriggerEnter(Collider other)

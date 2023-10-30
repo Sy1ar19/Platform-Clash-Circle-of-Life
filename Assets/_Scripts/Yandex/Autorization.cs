@@ -28,7 +28,6 @@ public class Autorization : MonoBehaviour
 
     private void OpenPanel()
     {
-       /* _panel.SetActive(true);*/
         _rankCanvas.alpha = 1;
         _rankCanvas.blocksRaycasts = true;
         _rankCanvas.interactable = true;

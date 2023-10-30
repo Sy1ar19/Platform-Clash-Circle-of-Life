@@ -6,17 +6,13 @@ public class SkinShop : MonoBehaviour
 
     [SerializeField] private Skin[] _info;
     [SerializeField] private bool[] _stockCheck;
-
     [SerializeField] private Transform _skins;
     [SerializeField] private int _index;
-
     [SerializeField] private SkinShopUI _skinShopUI;
     [SerializeField] private PlayerMoney _playerMoney;
-
     [SerializeField] private LoadSaveDataSystem _loadSaveDataSystem;
 
     private const string BoughtSkinsKey = "BoughtSkins";
-
 
     private void Awake()
     {

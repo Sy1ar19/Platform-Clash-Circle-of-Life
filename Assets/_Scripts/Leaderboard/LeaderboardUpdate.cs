@@ -5,7 +5,7 @@ public class LeaderboardUpdate : MonoBehaviour
 {
     [SerializeField] private PlayerMoney _money;
 
-    private string _leaderboardName = "money";
+    private readonly string _leaderboardName = "money";
 
 
     private void Awake()

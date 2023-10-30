@@ -8,7 +8,6 @@ public class ExperienceSlider : MonoBehaviour
     [SerializeField] private TMP_Text _experienceText;
     [SerializeField] private TMP_Text _levelText;
     [SerializeField] private PlayerExperience _playerExperience;
-
     [SerializeField] private Transform _experiencePosition;
     [SerializeField] private Transform _experienceMobilePosition;
 

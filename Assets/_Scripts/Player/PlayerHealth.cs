@@ -19,7 +19,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private DisplayDamage _displayDamage;
     private PlayerMover _playerMover;
     private PlayerAnimator _playerAnimator;
-    private int _maxHealth;
 
     public bool IsAlive => _isAlive;
     public int CurrentHealth { get; private set; }
@@ -52,16 +51,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         _workShop.ArmorUpgraded -= OnArmorUpgraded;
     }
 
-    private void OnArmorUpgraded()
-    {
-        _armor = SaveLoadSystem.LoadData<int>(ArmorKey, Armor);
-    }
-
-    private void OnHealthUpgraded()
-    {
-        _health = SaveLoadSystem.LoadData<int>(HealthKey, _health);
-    }
-
     public void ApplyDamage(int damage)
     {
         if (damage < 0)
@@ -91,5 +80,15 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public int GetCurrentHealth()
     {
         return CurrentHealth;
+    }
+
+    private void OnArmorUpgraded()
+    {
+        _armor = SaveLoadSystem.LoadData<int>(ArmorKey, Armor);
+    }
+
+    private void OnHealthUpgraded()
+    {
+        _health = SaveLoadSystem.LoadData<int>(HealthKey, _health);
     }
 }

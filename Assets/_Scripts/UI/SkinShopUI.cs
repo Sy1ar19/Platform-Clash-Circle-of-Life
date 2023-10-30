@@ -4,16 +4,15 @@ using TMPro;
 
 public class SkinShopUI : MonoBehaviour
 {
+    private const string BoughtSkinsKey = "BoughtSkins";
+    private const float ButtonClickCooldown = 0.1f;
+
     [SerializeField] private Button _buyButton;
     [SerializeField] private Button _selectButton;
     [SerializeField] private Button _selectedButton;
     [SerializeField] private TextMeshProUGUI _priceText;
-
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _buttonClickSound;
-
-    private const string BoughtSkinsKey = "BoughtSkins";
-    private const float ButtonClickCooldown = 0.1f;
 
     private float _lastButtonClickTime;
 

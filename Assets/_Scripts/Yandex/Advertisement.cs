@@ -6,23 +6,9 @@ public class Advertisement : MonoBehaviour
     [SerializeField] private AdvertisementButton _advertisementButton;
     [SerializeField] private SoundVolumeController _soundVolumeController;
 
-
     private bool _adIsPlaying;
 
     public bool AdIsPlaying => _adIsPlaying;
-
-    private static bool _hasAdPlayedInStart = false;
-
-    private void Start()
-    {
-/*#if UNITY_WEBGL && !UNITY_EDITOR
-        if (!_hasAdPlayedInStart)
-        {
-            PlayAd();
-            _hasAdPlayedInStart = true;
-        }
-#endif*/
-    }
 
     public void OnShowVideoButtonClick()
     {
