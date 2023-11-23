@@ -1,35 +1,39 @@
+using Assets._Scripts.Interfaces;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class PlayerMover : MonoBehaviour , IMovable
+namespace Assets._Scripts.Player
 {
-    [SerializeField] private float _movementSpeed;
-
-    private Rigidbody _rigidbody;
-    private bool _canMove = true;
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    public class PlayerMover : MonoBehaviour, IMovable
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _rigidbody.freezeRotation = true;
-    }
+        [SerializeField] private float _movementSpeed;
 
-    private void FixedUpdate()
-    {
-        if (_canMove)
+        private Rigidbody _rigidbody;
+        private bool _canMove = true;
+
+        private void Awake()
         {
-            Move();
+            _rigidbody = GetComponent<Rigidbody>();
+            _rigidbody.freezeRotation = true;
         }
-    }
 
-    public void StopMove()
-    {
-        _canMove = false;
-    }
+        private void FixedUpdate()
+        {
+            if (_canMove)
+            {
+                Move();
+            }
+        }
 
-    public void Move()
-    {
-        Vector3 forwardDirection = transform.forward * _movementSpeed;
-        _rigidbody.velocity = forwardDirection * _movementSpeed;
+        public void StopMove()
+        {
+            _canMove = false;
+        }
+
+        public void Move()
+        {
+            Vector3 forwardDirection = transform.forward * _movementSpeed;
+            _rigidbody.velocity = forwardDirection * _movementSpeed;
+        }
     }
 }

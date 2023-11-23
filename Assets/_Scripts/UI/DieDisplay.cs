@@ -1,22 +1,26 @@
+using Assets._Scripts.Player;
 using UnityEngine;
 
-public class DieDisplay : MonoBehaviour
+namespace Assets._Scripts.UI
 {
-    [SerializeField] private PlayerHealth _playerHealth;
-    [SerializeField] private GameObject _dieDisplay;
-
-    private void OnEnable()
+    public class DieDisplay : MonoBehaviour
     {
-        _playerHealth.Died += OnPlayerDied;
-    }
+        [SerializeField] private PlayerHealth _playerHealth;
+        [SerializeField] private GameObject _dieDisplay;
 
-    private void OnPlayerDied()
-    {
-        _dieDisplay.SetActive(true);
-    }
+        private void OnEnable()
+        {
+            _playerHealth.Died += OnPlayerDied;
+        }
 
-    private void OnDisable()
-    {
-        _playerHealth.Died -= OnPlayerDied;
+        private void OnPlayerDied()
+        {
+            _dieDisplay.SetActive(true);
+        }
+
+        private void OnDisable()
+        {
+            _playerHealth.Died -= OnPlayerDied;
+        }
     }
 }

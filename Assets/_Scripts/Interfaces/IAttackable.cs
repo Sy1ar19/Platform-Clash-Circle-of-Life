@@ -1,4 +1,7 @@
-public interface IAttackable
+namespace Assets._Scripts.Interfaces
 {
-    void Attack(IDamageable enemy, int damage);
+    public interface IAttackable
+    {
+        void Attack(IDamageable enemy, int damage);
+    }
 }

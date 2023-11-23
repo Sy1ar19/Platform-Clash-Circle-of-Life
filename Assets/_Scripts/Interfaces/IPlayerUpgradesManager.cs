@@ -1,7 +1,10 @@
-public interface IPlayerUpgradesManager 
+namespace Assets._Scripts.Interfaces
 {
-    bool CanLevelUp(IPlayerUpgrade upgrade);
-    void LevelUp(IPlayerUpgrade upgrade);
-    IPlayerUpgrade GetUpgrade(string id);
-    IPlayerUpgrade[] GetAllUpgrades();
+    public interface IPlayerUpgradesManager
+    {
+        bool CanLevelUp(IPlayerUpgrade upgrade);
+        void LevelUp(IPlayerUpgrade upgrade);
+        IPlayerUpgrade GetUpgrade(string id);
+        IPlayerUpgrade[] GetAllUpgrades();
+    }
 }

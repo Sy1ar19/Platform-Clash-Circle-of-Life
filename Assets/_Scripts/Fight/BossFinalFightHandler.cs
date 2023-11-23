@@ -1,45 +1,49 @@
+using Assets._Scripts.Enemy;
+using Assets._Scripts.Player;
 using System.Collections;
 using UnityEngine;
 
-public class BossFinalFightHandler : MonoBehaviour
+namespace Assets._Scripts.Fight
 {
-    [SerializeField] private FightTrigger _fightTrigger;
-    [SerializeField] private PlayerHealth _player;
-    [SerializeField] private Transform _cameraTarget;
-    [SerializeField] private float _transitionTime = 2f;
-    [SerializeField] private BossHealth _boss;
-    [SerializeField] private GameObject _victoryCanvas;
-    [SerializeField] private PlayerAnimator _playerAnimator;
-    [SerializeField] private PlayerMover _playerMover;
-
-
-    private void OnEnable()
+    public class BossFinalFightHandler : MonoBehaviour
     {
-        _fightTrigger.FightStarted += OnFightStarted;
-        _boss.BossDied += OnBossDied;
-    }
+        [SerializeField] private FightTrigger _fightTrigger;
+        [SerializeField] private PlayerHealth _player;
+        [SerializeField] private Transform _cameraTarget;
+        [SerializeField] private float _transitionTime = 2f;
+        [SerializeField] private BossHealth _boss;
+        [SerializeField] private GameObject _victoryCanvas;
+        [SerializeField] private PlayerAnimator _playerAnimator;
+        [SerializeField] private PlayerMover _playerMover;
 
-    private void OnDisable()
-    {
-        _fightTrigger.FightStarted -= OnFightStarted;
-        _boss.BossDied -= OnBossDied;
-    }
+        private void OnEnable()
+        {
+            _fightTrigger.FightStarted += OnFightStarted;
+            _boss.BossDied += OnBossDied;
+        }
 
-    private void OnBossDied()
-    {
-        _playerAnimator.PlayVictoryAnimation();
-        StartCoroutine(ShowVictoryCanvasAfterDelay());
-    }
+        private void OnDisable()
+        {
+            _fightTrigger.FightStarted -= OnFightStarted;
+            _boss.BossDied -= OnBossDied;
+        }
 
-    private IEnumerator ShowVictoryCanvasAfterDelay()
-    {
-        yield return new WaitForSeconds(_transitionTime);
-        _victoryCanvas.SetActive(true);
-    }
+        private void OnBossDied()
+        {
+            _playerAnimator.PlayVictoryAnimation();
+            StartCoroutine(ShowVictoryCanvasAfterDelay());
+        }
 
-    private void OnFightStarted()
-    {
-        _playerMover.StopMove();
-        _playerAnimator.PlayAttackAnimation(true);
+        private IEnumerator ShowVictoryCanvasAfterDelay()
+        {
+            yield return new WaitForSeconds(_transitionTime);
+            _victoryCanvas.SetActive(true);
+        }
+
+        private void OnFightStarted()
+        {
+            _playerMover.StopMove();
+            _playerAnimator.PlayAttackAnimation(true);
+        }
     }
 }

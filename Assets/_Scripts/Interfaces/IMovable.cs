@@ -1,4 +1,7 @@
-public interface IMovable
+namespace Assets._Scripts.Interfaces
 {
-    public void Move();
+    public interface IMovable
+    {
+        public void Move();
+    }
 }

@@ -1,18 +1,22 @@
+using Assets._Scripts.Player;
 using System;
 using UnityEngine;
 
-public class FightTrigger : MonoBehaviour
+namespace Assets._Scripts.Fight
 {
-    public event Action FightStarted;
-
-    public bool IsFightStarted { get; private set; } = false;
-
-    private void OnTriggerEnter(Collider other)
+    public class FightTrigger : MonoBehaviour
     {
-        if (other.TryGetComponent<PlayerHealth>(out PlayerHealth player))
+        public event Action FightStarted;
+
+        public bool IsFightStarted { get; private set; } = false;
+
+        private void OnTriggerEnter(Collider other)
         {
-            IsFightStarted = true;
-            FightStarted?.Invoke();
+            if (other.TryGetComponent(out PlayerHealth player))
+            {
+                IsFightStarted = true;
+                FightStarted?.Invoke();
+            }
         }
     }
 }

@@ -1,26 +1,29 @@
 using UnityEngine;
 
-public class HideInPortrait : MonoBehaviour
+namespace Assets._Scripts.UI
 {
-    private void Start()
+    public class HideInPortrait : MonoBehaviour
     {
-        CheckScreenOrientation();
-    }
-
-    private void Update()
-    {
-        CheckScreenOrientation();
-    }
-
-    private void CheckScreenOrientation()
-    {
-        if (Screen.width > Screen.height)
+        private void Start()
         {
-            gameObject.SetActive(true);
+            CheckScreenOrientation();
         }
-        else
+
+        private void Update()
         {
-            gameObject.SetActive(false);
+            CheckScreenOrientation();
+        }
+
+        private void CheckScreenOrientation()
+        {
+            if (Screen.width > Screen.height)
+            {
+                gameObject.SetActive(true);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

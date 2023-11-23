@@ -1,32 +1,36 @@
+using Assets._Scripts.Player;
 using TMPro;
 using UnityEngine;
 
-public class RewardDisplay : MonoBehaviour
+namespace Assets._Scripts.UI
 {
-    [SerializeField] private TMP_Text _moneyText;
-    [SerializeField] private PlayerMoney _playerMoney;
-    [SerializeField] private AdvertisementButton _advertisementButton;
-
-    private void OnMoneyChanged(int newMoney)
+    public class RewardDisplay : MonoBehaviour
     {
-        UpdateMoneyDisplay(newMoney);
-    }
+        [SerializeField] private TMP_Text _moneyText;
+        [SerializeField] private PlayerMoney _playerMoney;
+        [SerializeField] private AdvertisementButton _advertisementButton;
 
-    private void UpdateMoneyDisplay(int moneyAmount)
-    {
-        int temp = int.Parse(_moneyText.text) + moneyAmount;
-        _moneyText.text = temp.ToString();
-    }
+        private void OnMoneyChanged(int newMoney)
+        {
+            UpdateMoneyDisplay(newMoney);
+        }
 
-    private void OnEnable()
-    {
-        _playerMoney.MoneyChanged += OnMoneyChanged;
+        private void UpdateMoneyDisplay(int moneyAmount)
+        {
+            int temp = int.Parse(_moneyText.text) + moneyAmount;
+            _moneyText.text = temp.ToString();
+        }
 
-        _moneyText.text = _playerMoney.LevelMoney.ToString();
-    }
+        private void OnEnable()
+        {
+            _playerMoney.MoneyChanged += OnMoneyChanged;
 
-    private void OnDisable()
-    {
-        _playerMoney.MoneyChanged -= OnMoneyChanged;
+            _moneyText.text = _playerMoney.LevelMoney.ToString();
+        }
+
+        private void OnDisable()
+        {
+            _playerMoney.MoneyChanged -= OnMoneyChanged;
+        }
     }
 }

@@ -1,7 +1,10 @@
 using System;
 
-public interface IStorageService 
+namespace Assets._Scripts.Storage
 {
-    void Save(string key, object data, Action callback = null);
-    void Load<T>(string key, Action<T> callback);
+    public interface IStorageService
+    {
+        void Save(string key, object data, Action callback = null);
+        void Load<T>(string key, Action<T> callback);
+    }
 }

@@ -1,35 +1,38 @@
 using System;
 using UnityEngine;
 
-public class PlayerPrefsStorageService : IStorageService
+namespace Assets._Scripts.Storage
 {
-    public void Save(string key, object data, Action callback = null)
+    public class PlayerPrefsStorageService : IStorageService
     {
-        if (data is int intValue)
+        public void Save(string key, object data, Action callback = null)
         {
-            PlayerPrefs.SetInt(key, intValue);
-        }
-        else if (data is float floatValue)
-        {
-            PlayerPrefs.SetFloat(key, floatValue);
+            if (data is int intValue)
+            {
+                PlayerPrefs.SetInt(key, intValue);
+            }
+            else if (data is float floatValue)
+            {
+                PlayerPrefs.SetFloat(key, floatValue);
+            }
+
+            PlayerPrefs.Save();
+
+            callback?.Invoke();
         }
 
-        PlayerPrefs.Save();
-
-        callback?.Invoke();
-    }
-
-    public void Load<T>(string key, Action<T> callback)
-    {
-        if (typeof(T) == typeof(int))
+        public void Load<T>(string key, Action<T> callback)
         {
-            int loadedValue = PlayerPrefs.GetInt(key, default);
-            callback?.Invoke((T)(object)loadedValue);
-        }
-        else if (typeof(T) == typeof(float))
-        {
-            float loadedValue = PlayerPrefs.GetFloat(key, default);
-            callback?.Invoke((T)(object)loadedValue);
+            if (typeof(T) == typeof(int))
+            {
+                int loadedValue = PlayerPrefs.GetInt(key, default);
+                callback?.Invoke((T)(object)loadedValue);
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                float loadedValue = PlayerPrefs.GetFloat(key, default);
+                callback?.Invoke((T)(object)loadedValue);
+            }
         }
     }
 }

@@ -1,13 +1,16 @@
 using System;
 
-public class BossHealth : EnemyHealth
+namespace Assets._Scripts.Enemy
 {
-    public event Action BossDied;
-
-    public override void Die()
+    public class BossHealth : EnemyHealth
     {
-        BossDied?.Invoke();
-        _isAlive = false;
-        _enemyAnimator.PlayDieAnimation();
+        public event Action BossDied;
+
+        public override void Die()
+        {
+            BossDied?.Invoke();
+            _isAlive = false;
+            _enemyAnimator.PlayDieAnimation();
+        }
     }
 }

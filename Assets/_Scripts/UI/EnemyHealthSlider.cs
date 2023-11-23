@@ -1,50 +1,54 @@
+using Assets._Scripts.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHealthSlider : MonoBehaviour
+namespace Assets._Scripts.UI
 {
-    [SerializeField] private Slider _healthSlider;
-    [SerializeField] private TMP_Text _healthText;
-
-    private IDamageable _enemy;
-
-    private void Start()
+    public class EnemyHealthSlider : MonoBehaviour
     {
-        _healthSlider.gameObject.SetActive(false);
-    }
+        [SerializeField] private Slider _healthSlider;
+        [SerializeField] private TMP_Text _healthText;
 
-    private void OnDisable()
-    {
-        if (_enemy != null)
+        private IDamageable _enemy;
+
+        private void Start()
         {
-            _enemy.HealthChanged -= OnHealthChanged;
-            _enemy = null;
+            _healthSlider.gameObject.SetActive(false);
         }
-    }
 
-    public void ActivateSlider(IDamageable enemy)
-    {
-        _enemy = enemy;
-        _healthSlider.gameObject.SetActive(true);
-        _healthText.text = $"{enemy.CurrentHealth} / {enemy.MaxHealth}";
-        _healthSlider.maxValue = enemy.MaxHealth;
-        enemy.HealthChanged += OnHealthChanged;
-    }
+        private void OnDisable()
+        {
+            if (_enemy != null)
+            {
+                _enemy.HealthChanged -= OnHealthChanged;
+                _enemy = null;
+            }
+        }
 
-    private void OnHealthChanged(int health)
-    {
-        UpdateHealth(health);
-    }
+        public void ActivateSlider(IDamageable enemy)
+        {
+            _enemy = enemy;
+            _healthSlider.gameObject.SetActive(true);
+            _healthText.text = $"{enemy.CurrentHealth} / {enemy.MaxHealth}";
+            _healthSlider.maxValue = enemy.MaxHealth;
+            enemy.HealthChanged += OnHealthChanged;
+        }
 
-    public void UpdateHealth(int currentHealth)
-    {
-        _healthSlider.value = currentHealth;
-        _healthText.text = $"{_enemy.CurrentHealth} / {_enemy.MaxHealth}";
-    }
+        private void OnHealthChanged(int health)
+        {
+            UpdateHealth(health);
+        }
 
-    public void DeactivateSlider()
-    {
-        _healthSlider.gameObject.SetActive(false);
+        public void UpdateHealth(int currentHealth)
+        {
+            _healthSlider.value = currentHealth;
+            _healthText.text = $"{_enemy.CurrentHealth} / {_enemy.MaxHealth}";
+        }
+
+        public void DeactivateSlider()
+        {
+            _healthSlider.gameObject.SetActive(false);
+        }
     }
 }

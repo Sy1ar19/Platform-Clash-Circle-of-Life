@@ -1,12 +1,16 @@
+using Assets._Scripts.Player;
 using UnityEngine;
 
-public class DeahtTrigger : MonoBehaviour
+namespace Assets._Scripts.Fight
 {
-    private void OnTriggerEnter(Collider other)
+    public class DeahtTrigger : MonoBehaviour
     {
-        if (other.TryGetComponent<PlayerHealth>(out PlayerHealth player))
+        private void OnTriggerEnter(Collider other)
         {
-            player.Die();
+            if (other.TryGetComponent(out PlayerHealth player))
+            {
+                player.Die();
+            }
         }
     }
 }

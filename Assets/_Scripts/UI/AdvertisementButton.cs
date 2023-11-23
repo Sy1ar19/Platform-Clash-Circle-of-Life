@@ -1,41 +1,50 @@
+using Assets._Scripts.Player;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AdvertisementButton : MonoBehaviour
+namespace Assets._Scripts.UI
 {
-    [SerializeField] private Button _button;
-    [SerializeField] private PlayerMoney _playerMoney;
-    [SerializeField] private int _coinsMultiplier = 2;
-
-    public event Action<int> WatchedAd;
-
-    private bool _isAdvertismentWatched = false;
-
-    private void Start()
+    public class AdvertisementButton : MonoBehaviour
     {
-        _button.onClick.AddListener(WatchAd);
-    }
+        [SerializeField] private Button _button;
+        [SerializeField] private PlayerMoney _playerMoney;
+        [SerializeField] private int _coinsMultiplier = 2;
 
-    public void WatchAd()
-    {
-        if (_isAdvertismentWatched == false)
+        public event Action<int> WatchedAd;
+
+        private bool _isAdvertismentWatched = false;
+
+        private void Start()
         {
-            if (_playerMoney.LevelMoney > 0)
+            _button.onClick.AddListener(WatchAd);
+
+            if (_playerMoney.LevelMoney == 0)
             {
-                int additionalCoins = _playerMoney.LevelMoney;
+                _button.gameObject.SetActive(false);
+            }
+        }
 
-                if(_playerMoney.GoldMultiplier > 1)
+        public void WatchAd()
+        {
+            if (_isAdvertismentWatched == false)
+            {
+                if (_playerMoney.LevelMoney > 0)
                 {
-                    _playerMoney.EarnMoney(_playerMoney.LevelMoney/2);
-                }
-                else
-                {
-                    _playerMoney.EarnMoney(_playerMoney.LevelMoney);
-                }
+                    int additionalCoins = _playerMoney.LevelMoney;
 
-                _button.interactable = false;
-                _isAdvertismentWatched = true;
+                    if (_playerMoney.GoldMultiplier > 1)
+                    {
+                        _playerMoney.EarnMoney(_playerMoney.LevelMoney / 2);
+                    }
+                    else
+                    {
+                        _playerMoney.EarnMoney(_playerMoney.LevelMoney);
+                    }
+
+                    _button.interactable = false;
+                    _isAdvertismentWatched = true;
+                }
             }
         }
     }

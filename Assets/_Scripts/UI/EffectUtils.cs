@@ -1,22 +1,37 @@
 using UnityEngine;
 
-public class EffectUtils
+namespace Assets._Scripts.UI
 {
-    private const float MinInclusive = 0.8f;
-    private const float MaxInclusive = 1.2f;
-
-    public static void PerformEffect(ParticleSystem muzzleEffect, AudioSource audioSource, AudioClip audioClip)
+    public class EffectUtils
     {
-        if (muzzleEffect != null)
+        private const float MinInclusive = 0.8f;
+        private const float MaxInclusive = 1.2f;
+
+        public static void PerformEffect(ParticleSystem muzzleEffect, AudioSource audioSource, AudioClip audioClip)
         {
-            audioSource.pitch = Random.Range(MinInclusive, MaxInclusive);
-            muzzleEffect.Play();
+            if (muzzleEffect != null)
+            {
+                PerformEffectOnComponent(muzzleEffect, audioSource, audioClip);
+            }
+
+            if (audioSource != null && audioClip != null)
+            {
+                PerformEffectOnComponent(audioSource, audioSource, audioClip);
+            }
         }
 
-        if (audioSource != null && audioClip != null)
+        private static void PerformEffectOnComponent(Component component, AudioSource audioSource, AudioClip audioClip)
         {
             audioSource.pitch = Random.Range(MinInclusive, MaxInclusive);
-            audioSource.PlayOneShot(audioClip);
+
+            if (component is ParticleSystem particleSystem)
+            {
+                particleSystem.Play();
+            }
+            else if (audioClip != null)
+            {
+                audioSource.PlayOneShot(audioClip);
+            }
         }
     }
 }

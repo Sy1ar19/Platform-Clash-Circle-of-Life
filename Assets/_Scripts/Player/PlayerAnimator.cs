@@ -1,30 +1,33 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-public class PlayerAnimator : MonoBehaviour
+namespace Assets._Scripts.Player
 {
-    private Animator _animator;
-    public readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
-    public readonly int IsDying = Animator.StringToHash(nameof(IsDying));
-    public readonly int Win = Animator.StringToHash(nameof(Win));
-
-    private void Awake()
+    [RequireComponent(typeof(Animator))]
+    public class PlayerAnimator : MonoBehaviour
     {
-        _animator = GetComponent<Animator>();
-    }
+        private Animator _animator;
+        private readonly int IsAttacking = Animator.StringToHash(nameof(IsAttacking));
+        private readonly int IsDying = Animator.StringToHash(nameof(IsDying));
+        private readonly int Win = Animator.StringToHash(nameof(Win));
 
-    public void PlayAttackAnimation(bool isAttacking)
-    {
-        _animator.SetBool(IsAttacking, isAttacking);
-    }
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+        }
 
-    public void PlayDeathAnimation()
-    {
-        _animator.SetBool(IsDying, true);
-    }
+        public void PlayAttackAnimation(bool isAttacking)
+        {
+            _animator.SetBool(IsAttacking, isAttacking);
+        }
 
-    public void PlayVictoryAnimation()
-    {
-        _animator.SetBool(Win, true);
+        public void PlayDeathAnimation()
+        {
+            _animator.SetBool(IsDying, true);
+        }
+
+        public void PlayVictoryAnimation()
+        {
+            _animator.SetBool(Win, true);
+        }
     }
 }

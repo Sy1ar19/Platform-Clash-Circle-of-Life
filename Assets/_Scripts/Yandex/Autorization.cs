@@ -1,48 +1,51 @@
 using Agava.YandexGames;
 using UnityEngine;
 
-public class Autorization : MonoBehaviour
+namespace Assets._Scripts.Yandex
 {
-    [SerializeField] private GameObject _panel;
-    [SerializeField] private CanvasGroup _rankCanvas;
-    [SerializeField] private GameObject _agreementPanel;
-    [SerializeField] private CanvasGroup _canvasGroup;
-
-    public void Authorize()
+    public class Autorization : MonoBehaviour
     {
-        if (PlayerAccount.IsAuthorized == false)
+        [SerializeField] private GameObject _panel;
+        [SerializeField] private CanvasGroup _rankCanvas;
+        [SerializeField] private GameObject _agreementPanel;
+        [SerializeField] private CanvasGroup _canvasGroup;
+
+        public void Authorize()
         {
-            PlayerAccount.Authorize();
+            if (PlayerAccount.IsAuthorized == false)
+            {
+                PlayerAccount.Authorize();
+            }
+            else
+            {
+                RequestPersonalProfileDataPermission();
+                OpenPanel();
+            }
         }
-        else
+
+        private void RequestPersonalProfileDataPermission()
         {
-            RequestPersonalProfileDataPermission();
-            OpenPanel();
+            PlayerAccount.RequestPersonalProfileDataPermission();
         }
-    }
 
-    private void RequestPersonalProfileDataPermission()
-    {
-        PlayerAccount.RequestPersonalProfileDataPermission();
-    }
-
-    private void OpenPanel()
-    {
-        _rankCanvas.alpha = 1;
-        _rankCanvas.blocksRaycasts = true;
-        _rankCanvas.interactable = true;
-    }
-
-    public void CheckAutorization()
-    {
-        if (PlayerAccount.IsAuthorized == false) 
+        private void OpenPanel()
         {
-            _agreementPanel.SetActive(true);
-            _canvasGroup.interactable = false;
+            _rankCanvas.alpha = 1;
+            _rankCanvas.blocksRaycasts = true;
+            _rankCanvas.interactable = true;
         }
-        else
+
+        public void CheckAutorization()
         {
-            OpenPanel();
+            if (PlayerAccount.IsAuthorized == false)
+            {
+                _agreementPanel.SetActive(true);
+                _canvasGroup.interactable = false;
+            }
+            else
+            {
+                OpenPanel();
+            }
         }
     }
 }

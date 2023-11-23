@@ -1,41 +1,44 @@
 using UnityEngine;
 
-public class Tutorial : MonoBehaviour
+namespace Assets._Scripts
 {
-    private const string TutorialCompletedKey = "TutorialCompleted";
-
-    [SerializeField] private TimeHandler _timeHandler;
-    [SerializeField] GameObject[] tutorialPanels;
-
-    private void Start()
+    public class Tutorial : MonoBehaviour
     {
-        if (PlayerPrefs.HasKey(TutorialCompletedKey) == false)
-        {
-            ShowTutorial();
-            _timeHandler.Pause();
-        }
-        else
-        {
-            HideTutorial();
-        }
-    }
+        private const string TutorialCompletedKey = "TutorialCompleted";
 
-    public void ShowTutorial()
-    {
-        foreach (var panel in tutorialPanels)
-        {
-            panel.SetActive(true);
-        }
-    }
+        [SerializeField] private TimeHandler _timeHandler;
+        [SerializeField] GameObject[] _tutorialPanels;
 
-    public void HideTutorial()
-    {
-        foreach (var panel in tutorialPanels)
+        private void Start()
         {
-            panel.SetActive(false);
+            if (PlayerPrefs.HasKey(TutorialCompletedKey) == false)
+            {
+                ShowTutorial();
+                _timeHandler.Pause();
+            }
+            else
+            {
+                HideTutorial();
+            }
         }
 
-        PlayerPrefs.SetInt(TutorialCompletedKey, 1);
-        PlayerPrefs.Save();
+        public void ShowTutorial()
+        {
+            foreach (var panel in _tutorialPanels)
+            {
+                panel.SetActive(true);
+            }
+        }
+
+        public void HideTutorial()
+        {
+            foreach (var panel in _tutorialPanels)
+            {
+                panel.SetActive(false);
+            }
+
+            PlayerPrefs.SetInt(TutorialCompletedKey, 1);
+            PlayerPrefs.Save();
+        }
     }
 }

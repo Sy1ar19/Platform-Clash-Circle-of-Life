@@ -1,21 +1,25 @@
+using Assets._Scripts.Shop;
 using UnityEngine;
 
-public class PlayerSkin : MonoBehaviour
+namespace Assets._Scripts.Player
 {
-    private const string ChosenSkinKey = "ChosenSkin";
-
-    [SerializeField] private Skin[] _skins;
-    [SerializeField] private Transform _playerVisual;
-
-    private int _chosenSkinIndex;
-
-    private void OnEnable()
+    public class PlayerSkin : MonoBehaviour
     {
-        _chosenSkinIndex = PlayerPrefs.GetInt(ChosenSkinKey, 0);
+        private const string ChosenSkinKey = "ChosenSkin";
 
-        for (int i = 0; i < _playerVisual.childCount; i++)
+        [SerializeField] private Skin[] _skins;
+        [SerializeField] private Transform _playerVisual;
+
+        private int _chosenSkinIndex;
+
+        private void OnEnable()
         {
-            _playerVisual.GetChild(i).gameObject.SetActive(i == _chosenSkinIndex);
+            _chosenSkinIndex = PlayerPrefs.GetInt(ChosenSkinKey, 0);
+
+            for (int i = 0; i < _playerVisual.childCount; i++)
+            {
+                _playerVisual.GetChild(i).gameObject.SetActive(i == _chosenSkinIndex);
+            }
         }
     }
 }

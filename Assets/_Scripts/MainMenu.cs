@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class MainMenu : MonoBehaviour
+namespace Assets._Scripts
 {
-    [SerializeField] GameObject _player;
-
-    private void OnEnable()
+    public class MainMenu : MonoBehaviour
     {
-        _player.SetActive(true);
+        [SerializeField] GameObject _player;
+
+        private void OnEnable()
+        {
+            _player.SetActive(true);
+        }
     }
 }
